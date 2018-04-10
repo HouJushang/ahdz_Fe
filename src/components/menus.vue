@@ -4,7 +4,7 @@
     <th>
       <tr>
         <i :class="['open', isShow ? 'el-icon-minus' : 'el-icon-plus']" @click="isShow = !isShow">{{isShow ? '收缩' : '展开'}}</i>
-        <span>名称{{parentItem.name}}</span>
+        <span>{{parentItem.name}}</span>
         <!--<span>路由{{parentItem.router}}</span>-->
         <!--<span>排序{{parentItem.listorder}}</span>-->
         <el-button size="mini" type="text" @click="edit(parentItem)">编辑</el-button>

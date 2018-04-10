@@ -1,5 +1,5 @@
 <template>
-  <div class="menu">
+  <section class="menu">
     <el-dialog title="添加" :visible.sync="dialogShow" width="400px">
       <el-form ref="form" :model="formData" label-width="80px">
         <el-form-item  label="菜单名称">
@@ -7,8 +7,8 @@
         </el-form-item>
 
         <el-form-item label="父级菜单">
-          <el-select  v-model="formData.parentid" size="mini">
-            <el-option label="顶级栏目" value="0">
+          <el-select  v-model.number="formData.parentid" size="mini">
+            <el-option label="顶级栏目" :value="0">
             </el-option>
             <el-option v-for="item in rows" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
@@ -27,8 +27,8 @@
       <el-button type="primary" v-if="formType == 'add'" @click="addSubmit">添加</el-button>
       <el-button type="primary" v-if="formType == 'edit'" @click="editSubmit">修改</el-button>
     </el-dialog>
-    <menu-item :menuArr="rows" :parentItem="{name: '顶级栏目', id: '0'}"  @add="showAddForm" @edit="showEditForm" @del="showDel" style="margin-left: -10px;"></menu-item>
-  </div>
+    <menu-item :menuArr="rows" :parentItem="{name: '顶级栏目', id: 0}"  @add="showAddForm" @edit="showEditForm" @del="showDel" style="margin-left: -10px;"></menu-item>
+  </section>
 </template>
 <script>
   import {queryMenu, delMenu, addMenu, updateMenu} from '../api/menu'
@@ -66,10 +66,7 @@
       editSubmit() {
       },
       showDel(data) {
-        alert(2)
         this.$confirm('此操作将删除该路由, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.del(data)
