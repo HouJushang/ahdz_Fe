@@ -26,7 +26,6 @@
           align-items: flex-end
           height: 100%
           dd
-            border: 1px solid #2a2f32
             box-sizing: border-box
             border-bottom: none
             width: 85px
@@ -35,8 +34,10 @@
             line-height: 32px
             text-align: center
             margin-left: 20px
-            background-color: #474f54
             cursor: pointer
+            &.active
+              border: 1px solid #2a2f32
+              background-color: #474f54
         .personal
           width: 120px
     .left
@@ -46,6 +47,26 @@
       width: 180px
       bottom: 0px
       background-color: #333743
+      .menuLeft
+        background-color: #42475a
+        color: #fff
+      .menuChildWrap
+        background-color: #333743
+        li
+          padding-left: 28px
+          line-height: 28px
+          &:hover
+            background-color: #4a4e62
+          .menuLink
+            display: inline-block
+            width: 100%
+            height: 100%
+            color: #fff
+      .leftMenuP
+        font-size: 13px
+        line-height: 32px
+        padding-left: 10px
+
     .right
       position: absolute
       right: 0px
@@ -57,6 +78,7 @@
       padding: 10px
       & > section
         background-color: #fff
+        padding: 10px
 </style>
 <template>
   <div class="mainPage">
@@ -66,7 +88,7 @@
       </div>
       <div class="topRight">
         <dl class="topMenu">
-          <dd v-for="item in topMenu()">
+          <dd v-for="item in menuData" v-if="item.parentid == 0" @click="choseMenu(item.id)" :class="[item.id == currentMenu ? 'active' : '']">
             {{item.name}}
           </dd>
         </dl>
@@ -76,7 +98,16 @@
       </div>
     </div>
     <div class="left">
-      left
+      <dl class="menuLeft">
+        <dd v-for="item in menuData" v-if="item.parentid == currentMenu">
+          <div class="leftMenuP"><i class="el-icon-caret-right"></i> {{item.name}}</div>
+          <ul class="menuChildWrap">
+            <li v-for="item2 in menuData" v-if="item2.parentid == item.id">
+              <router-link :to="{name: item2.router}" class="menuLink">{{item2.name}}</router-link>
+            </li>
+          </ul>
+        </dd>
+      </dl>
     </div>
     <div class="right">
       <router-view/>
@@ -89,18 +120,18 @@
     name: 'mainPage',
     data () {
       return {
-        menuData: []
+        menuData: [],
+        currentMenu: 0,
       }
     },
     methods: {
-      topMenu() {
-          return this.menuData.filter(e => {
-              return e.parentid == 0;
-          })
+      choseMenu (id) {
+        this.currentMenu = id
       }
     },
     created() {
       getApi('admin/menu').then(e => {
+        console.log(e)
         this.menuData = e;
       })
     }
