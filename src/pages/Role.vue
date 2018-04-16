@@ -48,8 +48,8 @@
         rows: [],
         rules: {
           name: [
-            {required: true, message: '请输入登录名', trigger: 'blur'},
-            {min: 5, max: 18, message: '长度在 5 到 18 个字符', trigger: 'blur'}
+            {required: true, message: '请输入角色名臣', trigger: 'blur'},
+            {min: 2, max: 10, message: '长度在 5 到 18 个字符', trigger: 'blur'}
           ],
         }
       }
