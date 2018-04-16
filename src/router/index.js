@@ -6,6 +6,7 @@ import Menu from '@/pages/Menu'
 import Role from '@/pages/Role'
 import Admin from '@/pages/Admin'
 import AdminRole from '@/pages/AdminRole'
+import News from '@/pages/News'
 
 
 Vue.use(Router)
@@ -41,6 +42,11 @@ export default new Router({
           path: 'adminrole',
           name: 'adminrole',
           component: AdminRole
+        },
+        {
+          path: 'news',
+          name: 'news',
+          component: News
         },
       ]
     }

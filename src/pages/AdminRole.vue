@@ -46,7 +46,7 @@
 <script>
   import {queryAdmin} from '../api/admin'
   import {queryRole} from '../api/role'
-  import {addAdminRole, queryAdminRole, delAdminRole} from '../api/adminRole'
+  import {addAdminRole, queryAdminRole, delAdminRole, updateAdminRole} from '../api/adminRole'
   export default {
     name: 'adminrole_page',
     data () {
