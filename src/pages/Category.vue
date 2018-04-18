@@ -7,6 +7,25 @@
       align-items: center
       p
         font-size: 22px
+    .avatar-uploader .el-upload
+      border: 1px dashed #d9d9d9
+      border-radius: 6px
+      cursor: pointer
+      position: relative
+      overflow: hidden
+    .avatar-uploader .el-upload:hover
+      border-color: #409EFF
+    .avatar-uploader-icon
+      font-size: 28px
+      color: #8c939d
+      width: 178px
+      height: 178px
+      line-height: 178px
+      text-align: center
+    .avatar
+      width: 178px
+      height: 178px
+      display: block
 </style>
 <template>
   <section class="category_page">
@@ -17,8 +36,17 @@
 
     <el-table :data="rows" border style="width: 100%" size="mini">
       <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="name" label="角色名称"></el-table-column>
-      <el-table-column prop="lastIp" label="最后登录IP"></el-table-column>
+      <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column prop="template" label="模板"></el-table-column>
+      <el-table-column prop="model" label="模型"></el-table-column>
+      <el-table-column prop="description" label="描述"></el-table-column>
+      <el-table-column prop="keywords" label="关键词"></el-table-column>
+      <el-table-column label="栏目图片">
+        <template slot-scope="scope">
+          <img :src="scope.row.image" alt="" width="100" height="100">
+        </template>
+      </el-table-column>
+
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="showEditForm(scope.row)"></el-button>
@@ -35,7 +63,7 @@
         <el-form-item label="模板" prop="template">
           <el-input v-model="formData.template" size="mini"></el-input>
         </el-form-item>
-        <el-form-item label="模板" prop="model">
+        <el-form-item label="模型" prop="model">
           <el-input v-model="formData.model" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="描述" prop="description">
@@ -45,12 +73,7 @@
           <el-input v-model="formData.keywords" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="图片" prop="image">
-          <el-upload
-            class="avatar-uploader"
-            :action="baseUrl + 'upload'"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+          <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
             <img v-if="formData.image" :src="formData.image" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
@@ -70,7 +93,17 @@
         baseUrl,
         dialogShow: false,
         dialogType: 0,
-        formData: {},
+        formDataEmpty: {
+          name: '',
+          image: '',
+          template: '',
+          model: '',
+          description: '',
+          keywords: ''
+        },
+        formData: {
+          image: '',
+        },
         rows: [],
         rules: {
           name: [
@@ -87,7 +120,11 @@
     },
     methods: {
       handleAvatarSuccess(res, file) {
-        this.formData.image = URL.createObjectURL(file.raw);
+        if (res.code == 'success') {
+          this.formData.image = baseUrl + res.data.url
+        } else {
+          this.$message.error('图片上传失败！');
+        }
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
@@ -101,7 +138,7 @@
         return isJPG && isLt2M;
       },
       showAddForm() {
-        this.formData = {}
+        Object.assign(this.formData, this.formDataEmpty)
         this.showForm(0)
       },
       showEditForm(data) {
