@@ -29,21 +29,32 @@
         <el-form-item label="密码">
           <el-input type="password" v-model="loginForm.password"></el-input>
         </el-form-item>
-        <el-button type="primary" size="small" style="display: block; margin: 0 auto; width: 120px;">登录</el-button>
+        <el-button type="primary" :loading="loading" size="small" style="display: block; margin: 0 auto; width: 120px;" @click="submit">登录</el-button>
       </el-form>
     </div>
   </section>
 </template>
 <script>
+  import {login} from '../api/login'
   export default {
     name: 'login_page',
     data() {
       return {
+        loading: false,
         loginForm: {
           username: '',
           password: ''
         }
       };
-    }
+    },
+    methods: {
+      submit() {
+        login(this.loginForm).then(e => {
+          this.$router.push({name: 'main'})
+        }).catch(e => {
+            console.log(e)
+        })
+      }
+    },
   }
 </script>

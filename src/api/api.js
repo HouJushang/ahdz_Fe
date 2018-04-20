@@ -4,8 +4,9 @@
 import axios from 'axios'
 import {baseUrl} from '../config'
 import Vue from '../main'
+import Router from '../router/index'
 
-
+axios.defaults.withCredentials = true;
 axios.interceptors.response.use(function (response) {
   const responseData = response.data;
   switch (responseData.code) {
@@ -14,6 +15,9 @@ axios.interceptors.response.use(function (response) {
       return Promise.resolve(responseData.data);
     case 'error':
       Vue.$message.error(responseData.message);
+      return Promise.reject(responseData.message);
+    case 'authError':
+      Router.push({name: 'login'});
       return Promise.reject(responseData.message);
     default:
       Vue.$message.error(responseData.message);
