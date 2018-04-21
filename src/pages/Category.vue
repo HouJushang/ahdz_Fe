@@ -63,6 +63,12 @@
         <el-form-item label="模板" prop="template">
           <el-input v-model="formData.template" size="mini"></el-input>
         </el-form-item>
+        <el-form-item label="审核角色" prop="check">
+          <el-select v-model="formData.check" size="mini">
+            <el-option :value="0" label="不需要审核"></el-option>
+            <el-option v-for="item in roleRows" :value="item.id" :label="item.name"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="模型" prop="model">
           <el-input v-model="formData.model" size="mini"></el-input>
         </el-form-item>
@@ -86,6 +92,8 @@
 <script>
   import {baseUrl} from '../config'
   import {queryCategory, delCategory, addCategory, updateCategory} from '../api/category'
+  import {queryRole} from '../api/role'
+
   export default {
     name: 'category_page',
     data () {
@@ -99,12 +107,15 @@
           template: '',
           model: '',
           description: '',
+          check: 0,
           keywords: ''
         },
         formData: {
           image: '',
+          check: 0,
         },
         rows: [],
+        roleRows: [],
         rules: {
           name: [
             {required: true, message: '请输入角色名臣', trigger: 'blur'},
@@ -114,6 +125,9 @@
           ],
           model: [
             {required: true, message: '请输入model', trigger: 'blur'},
+          ],
+          check: [
+            {required: true, message: '审核方式必选', trigger: 'blur'}
           ]
         }
       }
@@ -173,6 +187,15 @@
       getRows() {
         queryCategory().then(e => {
           this.rows = e;
+        }).catch(e => {
+          this.$message.error(e);
+        })
+      },
+      getRoleRows() {
+        queryRole().then(e => {
+          this.roleRows = e
+        }).catch(e => {
+          this.$message.error(e);
         })
       },
       submit() {
@@ -197,12 +220,13 @@
           this.dialogShow = false
           this.getRows()
         }).then(e => {
-          console.log(e)
+          this.$message.error(e);
         })
       },
     },
     created() {
       this.getRows();
+      this.getRoleRows();
     }
   }
 </script>

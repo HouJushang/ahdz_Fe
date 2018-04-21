@@ -6,7 +6,6 @@ import {baseUrl} from '../config'
 import Vue from '../main'
 import Router from '../router/index'
 
-axios.defaults.withCredentials = true;
 axios.interceptors.response.use(function (response) {
   const responseData = response.data;
   switch (responseData.code) {
@@ -32,30 +31,33 @@ const getApi = function (url, data) {
   url = baseUrl + url
   return axios.get(url, {
     params: data,
+    withCredentials: true
   })
 }
 const delApi = function (url, data) {
   url = baseUrl + url
   return axios.delete(url, {
-    params: data
+    params: data,
+    withCredentials: true
   })
 }
 
 const postApi = function (url, data) {
   url = baseUrl + url
-  return axios.post(url, data)
+  return axios.post(url, data, {withCredentials: true})
 }
 
 const putApi = function (url, data) {
   url = baseUrl + url
-  return axios.put(url, data)
+  return axios.put(url, data, {withCredentials: true})
 }
 const upload = function (url, data) {
   url = baseUrl + url
   return axios.post(url, data, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    }
+    },
+    withCredentials: true
   })
 }
 export {

@@ -92,8 +92,8 @@
             {{item.name}}
           </dd>
         </dl>
-        <div class="personal">
-          用户名
+        <div class="personal" @click="loginOutFn">
+          退出
         </div>
       </div>
     </div>
@@ -116,6 +116,7 @@
 </template>
 <script>
   import {getApi} from '../api/api'
+  import {loginOut} from '../api/login'
   export default {
     name: 'mainPage',
     data () {
@@ -127,11 +128,17 @@
     methods: {
       choseMenu (id) {
         this.currentMenu = id
+      },
+      loginOutFn() {
+        loginOut().then(() => {
+          this.$router.push({name: 'login'})
+        }).catch(e => {
+          this.$message.error(e);
+        })
       }
     },
     created() {
       getApi('admin/menu').then(e => {
-        console.log(e)
         this.menuData = e;
       })
     }
