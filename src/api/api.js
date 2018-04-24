@@ -10,7 +10,6 @@ axios.interceptors.response.use(function (response) {
   const responseData = response.data;
   switch (responseData.code) {
     case 'success':
-      console.log(response)
       return Promise.resolve(responseData.data);
     case 'error':
       Vue.$message.error(responseData.message);

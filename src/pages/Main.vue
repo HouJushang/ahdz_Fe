@@ -39,7 +39,12 @@
               border: 1px solid #2a2f32
               background-color: #474f54
         .personal
-          width: 120px
+          display: flex
+          margin-right: 20px
+          align-items: center
+          span
+            margin-left: 10px
+            cursor: pointer
     .left
       position: absolute
       top: 40px
@@ -53,15 +58,17 @@
       .menuChildWrap
         background-color: #333743
         li
-          padding-left: 28px
           line-height: 28px
           &:hover
             background-color: #4a4e62
           .menuLink
             display: inline-block
+            padding-left: 28px
             width: 100%
             height: 100%
             color: #fff
+            &.router-link-active
+              color: #00a0e9
       .leftMenuP
         font-size: 13px
         line-height: 32px
@@ -76,6 +83,9 @@
       padding: 20px
       background-color: #eaedf1
       padding: 10px
+      overflow-y: scroll
+      &::-webkit-scrollbar
+        display: none
       & > section
         background-color: #fff
         padding: 10px
@@ -84,7 +94,7 @@
   <div class="mainPage">
     <div class="top">
       <div class="logo">
-        后台管理
+        安商后台
       </div>
       <div class="topRight">
         <dl class="topMenu">
@@ -92,8 +102,8 @@
             {{item.name}}
           </dd>
         </dl>
-        <div class="personal" @click="loginOutFn">
-          退出
+        <div class="personal">
+          {{username}} [ {{rolename}} ] <span @click="loginOutFn">退出</span>
         </div>
       </div>
     </div>
@@ -103,7 +113,8 @@
           <div class="leftMenuP"><i class="el-icon-caret-right"></i> {{item.name}}</div>
           <ul class="menuChildWrap">
             <li v-for="item2 in menuData" v-if="item2.parentid == item.id">
-              <router-link :to="{name: item2.router}" class="menuLink">{{item2.name}}</router-link>
+              <router-link :to="{name: item2.router}" class="menuLink" v-if="item2.router">{{item2.name}}</router-link>
+              <a href="javascript:;" class="menuLink" v-else>{{item2.name}}</a>
             </li>
           </ul>
         </dd>
@@ -121,12 +132,15 @@
     name: 'mainPage',
     data () {
       return {
+        username: localStorage.getItem('username'),
+        rolename: localStorage.getItem('rolename'),
         menuData: [],
-        currentMenu: 0,
+        currentMenu: localStorage.getItem('currentMenu'),
       }
     },
     methods: {
       choseMenu (id) {
+        localStorage.setItem('currentMenu', id);
         this.currentMenu = id
       },
       loginOutFn() {

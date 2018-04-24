@@ -15,9 +15,21 @@
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="showAddForm">添加管理员</el-button>
     </div>
     <el-table :data="rows" border style="width: 100%" size="mini">
-      <el-table-column prop="id" label="ID"></el-table-column>
+      <el-table-column
+        type="index"
+        width="50">
+      </el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
-      <el-table-column prop="lastIp" label="最后登录IP"></el-table-column>
+      <el-table-column prop="createdAt" label="创建时间">
+        <template slot-scope="scope">
+          <span>{{dateFormat(new Date(scope.row.createdAt))}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="updatedAt" label="最后修改时间">
+        <template slot-scope="scope">
+          <span>{{dateFormat(new Date(scope.row.updatedAt))}}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="showEditForm(scope.row)"></el-button>
@@ -41,10 +53,12 @@
 
 <script>
   import {queryAdmin, delAdmin, addAdmin, updateAdmin} from '../api/admin'
+  import dateFormat from '../util/dateFormat'
   export default {
     name: 'admmin_page',
     data () {
       return {
+        dateFormat,
         dialogShow: false,
         dialogType: 0,
         formData: {},

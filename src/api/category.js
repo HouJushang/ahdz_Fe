@@ -11,9 +11,13 @@ function addCategory(data){
 function updateCategory(data){
   return putApi('admin/category', data)
 }
+function getCategoryById(id) {
+  return getApi(`admin/categoryById/${id}`)
+}
 export {
   queryCategory,
   delCategory,
   addCategory,
-  updateCategory
+  updateCategory,
+  getCategoryById
 }

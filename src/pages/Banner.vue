@@ -25,56 +25,54 @@
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="作者" prop="author">
-        <el-input v-model="formData.author" size="mini"></el-input>
+      <el-form-item label="链接" prop="link">
+        <el-input v-model="formData.link" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="来源" prop="origin">
-        <el-input v-model="formData.origin" size="mini"></el-input>
-      </el-form-item>
-      <el-form-item label="图片" prop="thumb">
-        <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.thumb" :src="formData.thumb" class="avatar">
+      <el-form-item label="图片" prop="image">
+        <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
+                   :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <img v-if="formData.image" :src="formData.image" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
     </el-form>
-    <UE :config=config ref="ue" :default-msg="formData.content"></UE>
     <el-button type="primary" @click="submit">提交</el-button>
   </section>
 </template>
 <script>
-  import UE from '../components/ue'
   import {baseUrl} from '../config'
-  import {queryOneContent, addContent, updateContent} from "../api/content"
+  import {queryOneContent} from "../api/content"
+
   export default {
     name: 'news_page',
     data() {
-        return {
-          baseUrl,
-          config: {
-            initialFrameWidth: null,
-            initialFrameHeight: 400
-          },
-          formData: {
-            title: '',
-            author: '',
-            origin: '',
-            content: '',
-            thumb: '',
-          },
-          rules: {
-            title: [
-              {required: true, message: '标题必填', trigger: 'blur'},
-            ]
-          }
+      return {
+        baseUrl,
+        config: {
+          initialFrameWidth: null,
+          initialFrameHeight: 400
+        },
+        formData: {
+          title: '',
+          link: '',
+          image: '',
+        },
+        rules: {
+          title: [
+            {required: true, message: '标题必填', trigger: 'blur'},
+          ],
+          image: [
+            {required: true, message: '图片必选', trigger: 'blur'},
+          ]
         }
+      }
     },
     methods: {
       beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/gif';
         const isLt2M = file.size / 1024 / 1024 < 2;
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          this.$message.error('上传头像图片只能是 JPG png gif格式!');
         }
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!');
@@ -83,31 +81,19 @@
       },
       handleAvatarSuccess(res, file) {
         if (res.code == 'success') {
-          this.formData.thumb = baseUrl + res.data.url
+          this.formData.image = baseUrl + res.data.url
         } else {
           this.$message.error('图片上传失败！');
         }
       },
       submit() {
-        this.formData.content = this.$refs.ue.getUEContent();
         this.formData.categoryId = this.$route.params.categoryId;
-        if(this.$route.params.id){
-          updateContent(this.$route.params.categoryId, this.formData).then(e => {
-            console.log(e)
-          }).catch(e => {
-            this.$message.error(e);
-          })
-        }else{
-          addContent(this.$route.params.categoryId, this.formData).then(e => {
-            console.log(e)
-          }).catch(e => {
-            this.$message.error(e);
-          })
-        }
+        addContent(this.$route.params.categoryId, this.formData).then(e => {
+          console.log(e)
+        }).catch(e => {
+          this.$message.error(e);
+        })
       }
-    },
-    components: {
-      UE
     },
     created() {
       if (this.$route.params.id) {

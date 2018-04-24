@@ -29,18 +29,24 @@
         <el-form-item label="密码">
           <el-input type="password" v-model="loginForm.password"></el-input>
         </el-form-item>
-        <el-button type="primary" :loading="loading" size="small" style="display: block; margin: 0 auto; width: 120px;" @click="submit">登录</el-button>
+        <el-button type="primary" :loading="loading" size="small" style="display: block; margin: 0 auto; width: 120px;"
+                   @click="submit">登录
+        </el-button>
+        {{captcha}}
       </el-form>
     </div>
   </section>
 </template>
 <script>
   import {login} from '../api/login'
+  import captcha from '../api/captcha'
+
   export default {
     name: 'login_page',
     data() {
       return {
         loading: false,
+        captcha: '',
         loginForm: {
           username: '',
           password: ''
@@ -50,11 +56,21 @@
     methods: {
       submit() {
         login(this.loginForm).then(e => {
-          this.$router.push({name: 'main'})
+          localStorage.setItem('username', e.adminResult.username)
+          localStorage.setItem('rolename', e.adminRoleResult.role.name)
+          localStorage.setItem('currentMenu', 21)
+          this.$router.push({name: 'categoryList'})
         }).catch(e => {
-            console.log(e)
+          console.log(e)
         })
       }
     },
+    mounted() {
+      captcha().then(e => {
+        this.captcha = e;
+      }).catch(e => {
+        console.log(e)
+      })
+    }
   }
 </script>

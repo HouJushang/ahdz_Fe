@@ -10,7 +10,8 @@ import AdminRole from '@/pages/AdminRole'
 import News from '@/pages/News'
 import Category from '@/pages/Category'
 import CategoryList from '@/pages/CategoryList'
-
+import ContentList from '@/pages/ContentList'
+import Banner from '@/pages/Banner'
 Vue.use(Router)
 
 export default new Router({
@@ -60,10 +61,32 @@ export default new Router({
           name: 'categoryList',
           component: CategoryList
         },
+        //model
         {
           path: 'news/:categoryId',
           name: 'news',
           component: News
+        },
+        {
+          path: 'news/:categoryId/:id',
+          name: 'newsEdit',
+          component: News
+        },
+        {
+          path: 'banner/:categoryId',
+          name: 'banner',
+          component: Banner
+        },
+        {
+          path: 'banner/:categoryId/:id',
+          name: 'bannerEdit',
+          component: Banner
+        },
+        //end model
+        {
+          path: 'contentlist/:categoryId',
+          name: 'contentList',
+          component: ContentList
         },
       ]
     }

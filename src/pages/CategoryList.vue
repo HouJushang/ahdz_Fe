@@ -37,6 +37,7 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="add(scope.row)">发布文章</el-button>
+          <el-button type="primary" icon="el-icon-edit" size="mini" @click="manage(scope.row)">管理文章</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -54,6 +55,9 @@
     methods: {
       add(item) {
         this.$router.push({name: item.model, params: { categoryId: item.id }})
+      },
+      manage(item) {
+        this.$router.push({name: 'contentList', params: { categoryId: item.id }})
       },
       getRows() {
         queryCategory().then(e => {
