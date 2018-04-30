@@ -30,25 +30,38 @@
 <template>
   <section class="categoryList_page">
     <el-table :data="rows" border style="width: 100%" size="mini">
-      <el-table-column prop="id" label="ID"></el-table-column>
+      <el-table-column type="index" width="50"></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="template" label="模板"></el-table-column>
       <el-table-column prop="model" label="模型"></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column prop="role.name" label="审核"></el-table-column>
+      <!--<el-table-column prop="createdAt" label="创建时间">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span>{{dateFormat(new Date(scope.row.createdAt))}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="updatedAt" label="修改时间">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span>{{dateFormat(new Date(scope.row.updatedAt))}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <el-table-column label="操作" width="190px">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" size="mini" @click="add(scope.row)">发布文章</el-button>
-          <el-button type="primary" icon="el-icon-edit" size="mini" @click="manage(scope.row)">管理文章</el-button>
+          <el-button type="primary" icon="el-icon-edit" size="mini" @click="add(scope.row)">发布</el-button>
+          <el-button type="primary" icon="el-icon-edit" size="mini" @click="manage(scope.row)">管理</el-button>
         </template>
       </el-table-column>
     </el-table>
   </section>
 </template>
 <script>
+  import dateFormat from '../util/dateFormat'
   import {queryCategory, delCategory, addCategory, updateCategory} from '../api/category'
   export default {
     name: 'categoryList_page',
     data () {
       return {
+        dateFormat,
         rows: [],
       }
     },

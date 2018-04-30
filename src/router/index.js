@@ -11,7 +11,7 @@ import News from '@/pages/News'
 import Category from '@/pages/Category'
 import CategoryList from '@/pages/CategoryList'
 import ContentList from '@/pages/ContentList'
-import Banner from '@/pages/Banner'
+import Slide from '@/pages/Slide'
 Vue.use(Router)
 
 export default new Router({
@@ -73,14 +73,14 @@ export default new Router({
           component: News
         },
         {
-          path: 'banner/:categoryId',
-          name: 'banner',
-          component: Banner
+          path: 'slide/:categoryId',
+          name: 'slide',
+          component: Slide
         },
         {
-          path: 'banner/:categoryId/:id',
-          name: 'bannerEdit',
-          component: Banner
+          path: 'slide/:categoryId/:id',
+          name: 'slideEdit',
+          component: Slide
         },
         //end model
         {

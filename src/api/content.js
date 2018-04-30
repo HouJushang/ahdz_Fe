@@ -1,23 +1,27 @@
 import {getApi, postApi, putApi, delApi} from '../api/api'
-function queryContent(id,data){
-  return getApi(`admin/content/${id}`, data)
+function queryContent(categiryId,data){
+  return postApi(`admin/listContent/${categiryId}`, data)
 }
 function queryOneContent(data){
   return getApi('admin/getOneContent', data)
 }
-function delContent(id, data){
-  return delApi(`admin/content/${id}`, data)
+function delContent(categiryId, id){
+  return delApi(`admin/content/${categiryId}`, {id: id})
 }
-function addContent(id, data){
-  return postApi(`admin/content/${id}`, data)
+function addContent(categiryId, data){
+  return postApi(`admin/content/${categiryId}`, data)
 }
-function updateContent(id, data){
-  return putApi(`admin/content/${id}`, data)
+function checkContent(categiryId, data){
+  return putApi(`admin/checkContent/${categiryId}`, data)
+}
+function updateContent(categiryId, data){
+  return putApi(`admin/content/${categiryId}`, data)
 }
 export {
   queryOneContent,
   queryContent,
   delContent,
   addContent,
-  updateContent
+  updateContent,
+  checkContent
 }

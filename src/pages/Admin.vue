@@ -32,8 +32,8 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="showEditForm(scope.row)"></el-button>
-          <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="showDel(scope.row)"></el-button>
+          <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditForm(scope.row)"></el-button>
+          <el-button type="danger" icon="el-icon-delete" size="mini" @click="showDel(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>

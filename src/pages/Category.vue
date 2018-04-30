@@ -35,22 +35,33 @@
     </div>
 
     <el-table :data="rows" border style="width: 100%" size="mini">
-      <el-table-column prop="id" label="ID"></el-table-column>
+      <el-table-column type="index" width="50"></el-table-column>
+      <el-table-column prop="id" label="ID" width="50"></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="template" label="模板"></el-table-column>
       <el-table-column prop="model" label="模型"></el-table-column>
       <el-table-column prop="description" label="描述"></el-table-column>
       <el-table-column prop="keywords" label="关键词"></el-table-column>
-      <el-table-column label="栏目图片">
-        <template slot-scope="scope">
-          <img :src="scope.row.image" alt="" width="100" height="100">
-        </template>
-      </el-table-column>
-
+      <el-table-column prop="role.name" label="审核"></el-table-column>
+      <!--<el-table-column prop="createdAt" label="创建时间">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span>{{dateFormat(new Date(scope.row.createdAt))}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="updatedAt" label="修改时间">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span>{{dateFormat(new Date(scope.row.updatedAt))}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column label="栏目图片">-->
+        <!--<template slot-scope="scope">-->
+          <!--<img :src="scope.row.image" alt="" width="100" height="100">-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="showEditForm(scope.row)"></el-button>
-          <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="showDel(scope.row)"></el-button>
+          <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditForm(scope.row)"></el-button>
+          <el-button type="danger" icon="el-icon-delete" size="mini" @click="showDel(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -63,8 +74,8 @@
         <el-form-item label="模板" prop="template">
           <el-input v-model="formData.template" size="mini"></el-input>
         </el-form-item>
-        <el-form-item label="审核角色" prop="check">
-          <el-select v-model="formData.check" size="mini">
+        <el-form-item label="审核角色" prop="roleId">
+          <el-select v-model="formData.roleId" size="mini">
             <el-option :value="0" label="不需要审核"></el-option>
             <el-option v-for="item in roleRows" :value="item.id" :label="item.name"></el-option>
           </el-select>
@@ -90,6 +101,7 @@
   </section>
 </template>
 <script>
+  import dateFormat from '../util/dateFormat'
   import {baseUrl} from '../config'
   import {queryCategory, delCategory, addCategory, updateCategory} from '../api/category'
   import {queryRole} from '../api/role'
@@ -98,6 +110,7 @@
     name: 'category_page',
     data () {
       return {
+        dateFormat,
         baseUrl,
         dialogShow: false,
         dialogType: 0,
@@ -107,12 +120,17 @@
           template: '',
           model: '',
           description: '',
-          check: 0,
+          roleId: 0,
           keywords: ''
         },
         formData: {
+          name: '',
           image: '',
-          check: 0,
+          template: '',
+          model: '',
+          description: '',
+          roleId: 0,
+          keywords: ''
         },
         rows: [],
         roleRows: [],
@@ -125,9 +143,6 @@
           ],
           model: [
             {required: true, message: '请输入model', trigger: 'blur'},
-          ],
-          check: [
-            {required: true, message: '审核方式必选', trigger: 'blur'}
           ]
         }
       }

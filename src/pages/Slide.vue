@@ -41,7 +41,7 @@
 </template>
 <script>
   import {baseUrl} from '../config'
-  import {queryOneContent} from "../api/content"
+  import {queryOneContent, addContent, updateContent} from "../api/content"
 
   export default {
     name: 'news_page',
@@ -88,11 +88,20 @@
       },
       submit() {
         this.formData.categoryId = this.$route.params.categoryId;
-        addContent(this.$route.params.categoryId, this.formData).then(e => {
-          console.log(e)
-        }).catch(e => {
-          this.$message.error(e);
-        })
+        if (!this.$route.params.id) {
+          addContent(this.$route.params.categoryId, this.formData).then(e => {
+            this.$router.push({name: 'contentList', params: {categoryId: this.$route.params.categoryId}})
+          }).catch(e => {
+            this.$message.error(e);
+          })
+        } else{
+          updateContent(this.$route.params.categoryId, this.formData).then(e => {
+            this.$message.success('修改成功');
+            this.$router.push({name: 'contentList', params: {categoryId: this.$route.params.categoryId}})
+          }).catch(e => {
+            this.$message.error(e);
+          })
+        }
       }
     },
     created() {
