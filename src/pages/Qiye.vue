@@ -35,14 +35,23 @@
           <el-form-item label="标题" prop="title">
             <el-input v-model="formData.title" size="mini"></el-input>
           </el-form-item>
-          <el-form-item label="描述" prop="description">
-            <el-input v-model="formData.description" size="mini"></el-input>
+          <el-form-item label="地址" prop="address">
+            <el-input v-model="formData.address" size="mini"></el-input>
           </el-form-item>
-          <el-form-item label="作者" prop="author">
-            <el-input v-model="formData.author" size="mini"></el-input>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="formData.email" size="mini"></el-input>
           </el-form-item>
-          <el-form-item label="来源" prop="origin">
-            <el-input v-model="formData.origin" size="mini"></el-input>
+          <el-form-item label="联系人" prop="concatPeople">
+            <el-input v-model="formData.concatPeople" size="mini"></el-input>
+          </el-form-item>
+          <el-form-item label="电话" prop="phone">
+            <el-input v-model="formData.phone" size="mini"></el-input>
+          </el-form-item>
+          <el-form-item label="官网" prop="website">
+            <el-input v-model="formData.website" size="mini"></el-input>
+          </el-form-item>
+          <el-form-item label="手机" prop="phone">
+            <el-input v-model="formData.mobile" size="mini"></el-input>
           </el-form-item>
           <el-form-item label="图片" prop="thumb">
             <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
@@ -52,6 +61,7 @@
           </el-form-item>
         </div>
         <div class="formBodyRight">
+          公司简介
           <UE :config=config ref="ue" :default-msg="formData.content"></UE>
         </div>
       </div>
@@ -73,12 +83,7 @@
             initialFrameHeight: 400
           },
           formData: {
-            title: '',
-            author: '',
-            origin: '',
-            content: '',
             thumb: '',
-            description: ''
           },
           rules: {
             title: [

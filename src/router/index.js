@@ -12,6 +12,9 @@ import Category from '@/pages/Category'
 import CategoryList from '@/pages/CategoryList'
 import ContentList from '@/pages/ContentList'
 import Slide from '@/pages/Slide'
+import Yuanqu from '@/pages/YuanQu'
+import Qiye from '@/pages/Qiye'
+
 Vue.use(Router)
 
 export default new Router({
@@ -61,6 +64,7 @@ export default new Router({
           name: 'categoryList',
           component: CategoryList
         },
+
         //model
         {
           path: 'news/:categoryId',
@@ -82,7 +86,28 @@ export default new Router({
           name: 'slideEdit',
           component: Slide
         },
+        {
+          path: 'yuanqu/:categoryId',
+          name: 'yuanqu',
+          component: Yuanqu
+        },
+        {
+          path: 'yuanqu/:categoryId/:id',
+          name: 'yuanquEdit',
+          component: Yuanqu
+        },
+        {
+          path: 'qiye/:categoryId',
+          name: 'qiye',
+          component: Qiye
+        },
+        {
+          path: 'qiye/:categoryId/:id',
+          name: 'qiyeEdit',
+          component: Qiye
+        },
         //end model
+
         {
           path: 'contentlist/:categoryId',
           name: 'contentList',

@@ -35,14 +35,20 @@
           <el-form-item label="标题" prop="title">
             <el-input v-model="formData.title" size="mini"></el-input>
           </el-form-item>
-          <el-form-item label="描述" prop="description">
-            <el-input v-model="formData.description" size="mini"></el-input>
+          <el-form-item label="地址" prop="address">
+            <el-input v-model="formData.address" size="mini"></el-input>
           </el-form-item>
-          <el-form-item label="作者" prop="author">
-            <el-input v-model="formData.author" size="mini"></el-input>
+          <el-form-item label="面积" prop="mianji">
+            <el-input v-model="formData.mianji" size="mini"></el-input>
           </el-form-item>
-          <el-form-item label="来源" prop="origin">
-            <el-input v-model="formData.origin" size="mini"></el-input>
+          <el-form-item label="联系人" prop="concatPeople">
+            <el-input v-model="formData.concatPeople" size="mini"></el-input>
+          </el-form-item>
+          <el-form-item label="配套" prop="peitao">
+            <el-input v-model="formData.peitao" size="mini"></el-input>
+          </el-form-item>
+          <el-form-item label="电话" prop="phone">
+            <el-input v-model="formData.phone" size="mini"></el-input>
           </el-form-item>
           <el-form-item label="图片" prop="thumb">
             <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
@@ -52,7 +58,18 @@
           </el-form-item>
         </div>
         <div class="formBodyRight">
-          <UE :config=config ref="ue" :default-msg="formData.content"></UE>
+          <el-form-item label="园区服务">
+            <el-input type="textarea" v-model="formData.fuwu"></el-input>
+          </el-form-item>
+          <el-form-item label="园区优势">
+            <el-input type="textarea" v-model="formData.youshi"></el-input>
+          </el-form-item>
+          <el-form-item label="入园条件">
+            <el-input type="textarea" v-model="formData.tiaojian"></el-input>
+          </el-form-item>
+          <!--<UE :config=config ref="ue1" :default-msg="formData.fuwu"></UE>-->
+          <!--<UE :config=config ref="ue2" :default-msg="formData.youshi"></UE>-->
+          <!--<UE :config=config ref="ue3" :default-msg="formData.tiaojian"></UE>-->
         </div>
       </div>
     </el-form>
@@ -74,11 +91,16 @@
           },
           formData: {
             title: '',
-            author: '',
-            origin: '',
             content: '',
+            address: '',
             thumb: '',
-            description: ''
+            mianji: '',
+            concatPeople: '',
+            peitao: '',
+            phone: '',
+            fuwu: '',
+            youshi: '',
+            tiaojian: ''
           },
           rules: {
             title: [
@@ -107,7 +129,9 @@
         }
       },
       submit() {
-        this.formData.content = this.$refs.ue.getUEContent();
+        // this.formData.fuwu = this.$refs.ue1.getUEContent();
+        // this.formData.youshi = this.$refs.ue2.getUEContent();
+        // this.formData.tiaojian = this.$refs.ue3.getUEContent();
         this.formData.categoryId = this.$route.params.categoryId;
 
         var isPass = false
