@@ -14,6 +14,7 @@ import ContentList from '@/pages/ContentList'
 import Slide from '@/pages/Slide'
 import Yuanqu from '@/pages/YuanQu'
 import Qiye from '@/pages/Qiye'
+import Expert from '@/pages/Expert'
 
 Vue.use(Router)
 
@@ -105,6 +106,16 @@ export default new Router({
           path: 'qiye/:categoryId/:id',
           name: 'qiyeEdit',
           component: Qiye
+        },
+        {
+          path: 'expert/:categoryId',
+          name: 'expert',
+          component: Expert
+        },
+        {
+          path: 'expert/:categoryId/:id',
+          name: 'expertEdit',
+          component: Expert
         },
         //end model
 
