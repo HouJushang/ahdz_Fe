@@ -8,8 +8,7 @@
     .loagin_wrapper
       box-sizing: border-box
       width: 300px
-      height: 220px
-      padding: 0 40px
+      padding: 0px 40px
       border-radius: 4px
       background-color: #fff
       color: #525252
@@ -29,10 +28,15 @@
         <el-form-item label="密码">
           <el-input type="password" v-model="loginForm.password"></el-input>
         </el-form-item>
-        <el-button type="primary" :loading="loading" size="small" style="display: block; margin: 0 auto; width: 120px;"
+        <el-row style="align-items: center">
+          <el-col v-html="captcha" :span="12" @click.native="reCaptcha"></el-col>
+          <el-col :span="12">
+            <el-input size="small" placeholder="验证码" type="text" v-model="loginForm.captcha"></el-input>
+          </el-col>
+        </el-row>
+        <el-button type="primary" :loading="loading" size="small" style="display: block; margin: 20px auto; width: 120px;"
                    @click="submit">登录
         </el-button>
-        {{captcha}}
       </el-form>
     </div>
   </section>
@@ -49,7 +53,8 @@
         captcha: '',
         loginForm: {
           username: '',
-          password: ''
+          password: '',
+          captcha: ''
         }
       };
     },
@@ -63,14 +68,21 @@
         }).catch(e => {
           console.log(e)
         })
+      },
+      getCaptcha() {
+        captcha().then(e => {
+          console.log(e)
+          this.captcha = e.captcha
+        }).catch(e => {
+          console.log(e)
+        })
+      },
+      reCaptcha() {
+        this.getCaptcha()
       }
     },
     mounted() {
-      captcha().then(e => {
-        this.captcha = e;
-      }).catch(e => {
-        console.log(e)
-      })
+      this.getCaptcha()
     }
   }
 </script>

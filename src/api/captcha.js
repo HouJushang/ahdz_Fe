@@ -1,8 +1,5 @@
-import axios from 'axios'
-import {baseUrl} from '../config'
+import {getApi} from "./api";
+
 export default function () {
-  const url = baseUrl + 'captcha'
-  return axios.get(url, {
-    withCredentials: true
-  })
+  return getApi('captcha')
 }
