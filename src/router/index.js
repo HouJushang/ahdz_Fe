@@ -15,6 +15,10 @@ import Slide from '@/pages/Slide'
 import Yuanqu from '@/pages/YuanQu'
 import Qiye from '@/pages/Qiye'
 import Expert from '@/pages/Expert'
+import UserList from '@/pages/UserList'
+import Person from '@/pages/Person'
+import Company from '@/pages/Company'
+
 
 Vue.use(Router)
 
@@ -119,6 +123,21 @@ export default new Router({
         },
         //end model
 
+        {
+          path: 'userlist',
+          name: 'userList',
+          component: UserList
+        },
+        {
+          path: 'person/:userId',
+          name: 'person',
+          component: Person
+        },
+        {
+          path: 'company/:userId',
+          name: 'company',
+          component: Company
+        },
         {
           path: 'contentlist/:categoryId',
           name: 'contentList',
