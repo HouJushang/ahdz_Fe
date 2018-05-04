@@ -70,11 +70,10 @@
         },
         formData: {
           name: '',
-          author: '',
-          origin: '',
-          content: '',
-          thumb: '',
-          description: ''
+          idcard: '',
+          sex: 0,
+          address: '',
+          avatar: '',
         },
       }
     },
