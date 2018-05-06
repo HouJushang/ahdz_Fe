@@ -33,11 +33,17 @@
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="简介" prop="description">
+        <el-input v-model="formData.description" size="mini"></el-input>
+      </el-form-item>
       <el-form-item label="公司ID" prop="companyId">
         <el-input v-model="formData.companyId" size="mini"></el-input>
       </el-form-item>
       <el-form-item label="服务方式" prop="fanshi">
-        <el-input v-model="formData.name" size="mini"></el-input>
+        <el-input v-model="formData.fanshi" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="价格" prop="jiage">
+        <el-input v-model="formData.jiage" size="mini"></el-input>
       </el-form-item>
       <el-form-item label="服务对象" prop="duixiang">
         <el-input v-model="formData.duixiang" size="mini"></el-input>
@@ -108,7 +114,7 @@
     },
     methods: {
       submit() {
-        this.formData.xiangqing = this.$refs.ue.getUEContent();
+        this.formData.content = this.$refs.ue.getUEContent();
 
         var isPass = false
         this.$refs['form'].validate((valid) => {
