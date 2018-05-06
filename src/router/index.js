@@ -22,6 +22,10 @@ import AddJob from '@/pages/AddJob'
 import Job from '@/pages/Job'
 import Resume from '@/pages/Resume'
 import AddResume from '@/pages/AddResume'
+import Service from '@/pages/Service'
+import AddService from '@/pages/AddService'
+import Product from '@/pages/Product'
+import AddProduct from '@/pages/AddProduct'
 
 Vue.use(Router)
 
@@ -175,6 +179,36 @@ export default new Router({
           path: 'editResume/:id',
           name: 'editResume',
           component: AddResume
+        },
+        {
+          path: 'service',
+          name: 'service',
+          component: Service
+        },
+        {
+          path: 'addService',
+          name: 'addService',
+          component: AddService
+        },
+        {
+          path: 'editService/:id',
+          name: 'editService',
+          component: AddService
+        },
+        {
+          path: 'product',
+          name: 'product',
+          component: Product
+        },
+        {
+          path: 'addProduct',
+          name: 'addProduct',
+          component: AddProduct
+        },
+        {
+          path: 'editProduct/:id',
+          name: 'editProduct',
+          component: AddProduct
         },
       ]
     }

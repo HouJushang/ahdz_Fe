@@ -53,16 +53,11 @@
           initialFrameHeight: 400
         },
         formData: {
-          title: '',
-          link: '',
           image: '',
         },
         rules: {
           title: [
             {required: true, message: '标题必填', trigger: 'blur'},
-          ],
-          image: [
-            {required: true, message: '图片必选', trigger: 'blur'},
           ]
         }
       }
