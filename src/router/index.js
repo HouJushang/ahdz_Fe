@@ -18,7 +18,10 @@ import Expert from '@/pages/Expert'
 import UserList from '@/pages/UserList'
 import Person from '@/pages/Person'
 import Company from '@/pages/Company'
-
+import AddJob from '@/pages/AddJob'
+import Job from '@/pages/Job'
+import Resume from '@/pages/Resume'
+import AddResume from '@/pages/AddResume'
 
 Vue.use(Router)
 
@@ -142,6 +145,36 @@ export default new Router({
           path: 'contentlist/:categoryId',
           name: 'contentList',
           component: ContentList
+        },
+        {
+          path: 'job',
+          name: 'job',
+          component: Job
+        },
+        {
+          path: 'addJob',
+          name: 'addJob',
+          component: AddJob
+        },
+        {
+          path: 'editJob/:id',
+          name: 'editJob',
+          component: AddJob
+        },
+        {
+          path: 'resume',
+          name: 'resume',
+          component: Resume
+        },
+        {
+          path: 'addResume',
+          name: 'addResume',
+          component: AddResume
+        },
+        {
+          path: 'editResume/:id',
+          name: 'editResume',
+          component: AddResume
         },
       ]
     }

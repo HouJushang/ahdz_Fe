@@ -19,6 +19,7 @@
         type="index"
         width="50">
       </el-table-column>
+      <el-table-column prop="id" label="ID"></el-table-column>
       <el-table-column prop="phone" label="手机号"></el-table-column>
       <el-table-column label="用户类型">
         <template slot-scope="scope">
