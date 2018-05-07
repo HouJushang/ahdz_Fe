@@ -26,6 +26,7 @@ import Service from '@/pages/Service'
 import AddService from '@/pages/AddService'
 import Product from '@/pages/Product'
 import AddProduct from '@/pages/AddProduct'
+import Position from '@/pages/Position'
 
 Vue.use(Router)
 
@@ -209,6 +210,11 @@ export default new Router({
           path: 'editProduct/:id',
           name: 'editProduct',
           component: AddProduct
+        },
+        {
+          path: 'position',
+          name: 'position',
+          component: Position
         },
       ]
     }
