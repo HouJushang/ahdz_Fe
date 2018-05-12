@@ -27,6 +27,8 @@ import AddService from '@/pages/AddService'
 import Product from '@/pages/Product'
 import AddProduct from '@/pages/AddProduct'
 import Position from '@/pages/Position'
+import PersonList from '@/pages/PersonList'
+import CompanyList from '@/pages/CompanyList'
 
 Vue.use(Router)
 
@@ -135,6 +137,16 @@ export default new Router({
           path: 'userlist',
           name: 'userList',
           component: UserList
+        },
+        {
+          path: 'personlist',
+          name: 'personList',
+          component: PersonList
+        },
+        {
+          path: 'companylist',
+          name: 'companyList',
+          component: CompanyList
         },
         {
           path: 'person/:userId',

@@ -17,6 +17,7 @@
     <el-table :data="rows" border style="width: 100%" size="mini">
       <el-table-column type="index" width="50">
       </el-table-column>
+      <el-table-column prop="id" label="ID"></el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
       <el-table-column prop="model" label="模型"></el-table-column>
       <el-table-column prop="createdAt" label="创建时间">
@@ -54,7 +55,7 @@
   import {queryPosition, delPosition, addPosition, updatePosition} from '../api/position'
   import dateFormat from '../util/dateFormat'
   export default {
-    name: 'admmin_page',
+    name: 'position_page',
     data () {
       return {
         dateFormat,
@@ -121,7 +122,7 @@
         });
       },
       addSubmit() {
-        addPostion(this.formData).then(e => {
+        addPosition(this.formData).then(e => {
           this.dialogShow = false
           this.getRows()
         }).then(e => {

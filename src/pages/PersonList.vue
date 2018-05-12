@@ -11,7 +11,7 @@
 <template>
   <section class="admmin_page">
     <div class="admmin_page_top">
-      <p>用户列表</p>
+      <p>个人列表</p>
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="showAddForm">添加用户</el-button>
     </div>
     <el-table :data="listData.rows" border style="width: 100%" size="mini">
@@ -122,68 +122,13 @@
         this.$refs['form'] && this.$refs['form'].clearValidate()
       },
       getRows() {
-        queryUser({
+        queryUser(this.$route.params.categoryId, {
           pageInfo: {
             pageSize: this.pageInfo.pageSize,
             currentPage: this.pageInfo.currentPage
           }
         }).then(e => {
           this.listData = e;
-        })
-      },
-      showDel(row) {
-        this.$confirm('此操作将删除该用户, 是否继续?', '提示', {
-          type: 'warning'
-        }).then(() => {
-          this.del(row)
-        }).catch(() => {
-          console.log('取消删除')
-        });
-      },
-      showEditForm(data) {
-        Object.assign(this.formData, data)
-        this.showForm(1)
-      },
-      del(row) {
-        this.$confirm(`此操作将永久删除《${row.phone}》, 是否继续?`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          delUser({
-            id: row.id
-          }).then(e => {
-            this.getRows();
-          }).catch(e => {
-            this.$message.error(e);
-          })
-        }).catch(() => {
-          console.log('取消删除')
-        });
-      },
-      submit() {
-        this.$refs['form'].validate((valid) => {
-          if (!valid) {
-            return false;
-          } else {
-            this.dialogType == 0 ? this.addSubmit() : this.editSubmit();
-          }
-        });
-      },
-      addSubmit() {
-        addUser(this.formData).then(e => {
-          this.dialogShow = false
-          this.getRows()
-        }).then(e => {
-          this.$message.error(e);
-        })
-      },
-      editSubmit() {
-        updateUser(this.formData).then(e => {
-          this.dialogShow = false
-          this.getRows()
-        }).then(e => {
-          console.log(e)
         })
       },
     },

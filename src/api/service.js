@@ -14,10 +14,14 @@ function addService(data){
 function updateService(data){
   return putApi(`admin/service`, data)
 }
+function checkService(data){
+  return putApi(`admin/checkService`, data)
+}
 export {
   queryService,
   queryOneService,
   delService,
   addService,
-  updateService
+  updateService,
+  checkService
 }
