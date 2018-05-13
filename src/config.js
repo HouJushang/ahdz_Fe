@@ -1,4 +1,6 @@
 const baseUrl = 'http://localhost:3000/';
-export  {
-  baseUrl
+const baseHost = "http://localhost:3000";
+export {
+  baseUrl,
+  baseHost
 }

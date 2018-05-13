@@ -23,9 +23,14 @@
       <el-table-column prop="company.companyName" label="公司名称"></el-table-column>
       <el-table-column prop="guige" label="规格"></el-table-column>
       <el-table-column prop="jiage" label="价格"></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="是否展示">
         <template slot-scope="scope">
           <el-tag :type="['danger', 'sucess'][scope.row.isShow]">{{ ['不展示', '展示'][scope.row.isShow] }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="审核状态">
+        <template slot-scope="scope">
+          {{['待审核', '审核通过', '未通过'][scope.row.status]}}
         </template>
       </el-table-column>
       <el-table-column label="操作">

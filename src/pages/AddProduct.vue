@@ -55,7 +55,7 @@
       <el-form-item label="图片" prop="image">
         <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.image" :src="formData.image" class="avatar">
+          <img v-if="formData.image" :src="baseHost + formData.image" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -73,13 +73,14 @@
 </template>
 <script>
   import UE from '../components/ue'
-  import {baseUrl} from '../config'
+  import {baseHost, baseUrl} from '../config'
   import {queryOneProduct, addProduct, updateProduct} from "../api/product"
 
   export default {
     name: 'news_page',
     data() {
       return {
+        baseHost,
         baseUrl,
         config: {
           initialFrameWidth: null,
@@ -138,7 +139,7 @@
       },
       handleAvatarSuccess(res, file) {
         if (res.code == 'success') {
-          this.formData.image = baseUrl + res.data.url
+          this.formData.image = '/' + res.data.url
         } else {
           this.$message.error('图片上传失败！');
         }
