@@ -14,10 +14,14 @@ function addProduct(data){
 function updateProduct(data){
   return putApi(`admin/product`, data)
 }
+function checkProduct(data){
+  return putApi(`admin/checkProduct`, data)
+}
 export {
   queryProduct,
   queryOneProduct,
   delProduct,
   addProduct,
-  updateProduct
+  updateProduct,
+  checkProduct
 }

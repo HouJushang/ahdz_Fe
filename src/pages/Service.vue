@@ -24,17 +24,22 @@
       <el-table-column prop="fanshi" label="服务方式"></el-table-column>
       <el-table-column prop="duixiang" label="服务对象"></el-table-column>
       <el-table-column prop="leibie" label="类别"></el-table-column>
-      <el-table-column prop="status" label="状态"  width="80">
-        <template slot-scope="scope">
-          <el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['待审核', '通过', '未通过'][scope.row.status]}}</el-tag>
-        </template>
-      </el-table-column>
       <el-table-column label="是否展示">
         <template slot-scope="scope">
           <el-tag :type="['danger', 'sucess'][scope.row.isShow]">{{ ['不展示', '展示'][scope.row.isShow] }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="审核状态">
+        <template slot-scope="scope">
+          {{['待审核', '审核通过', '未通过'][scope.row.status]}}
+        </template>
+      </el-table-column>
+      <!--<el-table-column prop="status" label="状态"  width="80">-->
+        <!--<template slot-scope="scope">-->
+          <!--<el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['待审核', '通过', '未通过'][scope.row.status]}}</el-tag>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit"  size="mini" @click="edit(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete"  size="mini" @click="showDel(scope.row)"></el-button>

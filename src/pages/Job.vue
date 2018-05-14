@@ -24,18 +24,33 @@
       <el-table-column prop="name" label="职位名称"></el-table-column>
       <el-table-column prop="xingzhi" label="工作性质"></el-table-column>
       <el-table-column prop="xingzhi" label="性质"></el-table-column>
+      <el-table-column label="审核状态">
+        <template slot-scope="scope">
+          {{['待审核', '审核通过', '未通过'][scope.row.status]}}
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-tag :type="['danger', 'sucess'][scope.row.isShow]">{{ ['不展示', '展示'][scope.row.isShow] }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit"  size="mini" @click="edit(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete"  size="mini" @click="del(scope.row)"></el-button>
+          <el-button type="warning" size="mini" icon="el-icon-setting"  @click="check(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog :title="`《${checkDialog.title}》- 审核`" :visible.sync="checkDialog.show" width="30%">
+      <div>
+        <el-radio v-model="checkDialog.status" :label="1">通过</el-radio>
+        <el-radio v-model="checkDialog.status" :label="2">未通过</el-radio>
+      </div>
+      <div style="padding: 20px 0;">
+        <el-button type="primary" size="mini" style="float: right;" @click="checkSubmit">提交</el-button>
+      </div>
+    </el-dialog>
     <el-pagination style="float: right; margin: 20px 0 10px 0;"
                    background page-sizes :page-sizes="[10, 20, 50, 100]" :page-size="this.pageInfo.pageSize"
                    layout="total, sizes, prev, pager, next"
@@ -46,7 +61,7 @@
 </template>
 
 <script>
-  import {queryJob, delJob} from '../api/job'
+  import {queryJob, delJob, checkJob} from '../api/job'
   import dateFormat from '../util/dateFormat'
   export default {
     name: 'admmin_page',
@@ -62,6 +77,11 @@
           currentPage: 1,
           pageSize: 10,
           total: 0,
+        },
+        checkDialog: {
+          show: false,
+          title: '',
+          status: 1
         },
       }
     },
@@ -105,7 +125,26 @@
         }).then(e => {
           this.listData = e;
         })
-      }
+      },
+      check(row) {
+        Object.assign(this.checkDialog, {
+          show: true,
+          title: row.title,
+          id: row.id,
+          status: row.status != 0 ? row.status : 1
+        })
+      },
+      checkSubmit() {
+        checkJob({
+          id: this.checkDialog.id,
+          status: this.checkDialog.status
+        }).then(e => {
+          this.checkDialog.show = false
+          this.getRows()
+        }).catch(e => {
+          this.$message.error(e);
+        })
+      },
     },
     created() {
       this.getRows();

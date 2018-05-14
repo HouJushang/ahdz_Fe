@@ -14,10 +14,14 @@ function addJob(data){
 function updateJob(data){
   return putApi(`admin/job`, data)
 }
+function checkJob(data){
+  return putApi(`admin/checkJob`, data)
+}
 export {
   queryJob,
   queryOneJob,
   delJob,
   addJob,
-  updateJob
+  updateJob,
+  checkJob
 }
