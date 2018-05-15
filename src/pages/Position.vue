@@ -34,6 +34,7 @@
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditForm(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete" size="mini" @click="showDel(scope.row)"></el-button>
+          <el-button type="success" size="mini" @click="goDetail(scope.row)">推荐列表</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,6 +93,9 @@
           this.dialogShow = false
           this.getRows()
         })
+      },
+      goDetail(row){
+        this.$router.push({name: 'positionContent', params: {id: row.id}})
       },
       showDel(data) {
         this.$confirm('此操作将删除该推荐位, 是否继续?', '提示', {

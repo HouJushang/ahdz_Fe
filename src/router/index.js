@@ -29,6 +29,7 @@ import AddProduct from '@/pages/AddProduct'
 import Position from '@/pages/Position'
 import PersonList from '@/pages/PersonList'
 import CompanyList from '@/pages/CompanyList'
+import PositionContent from '@/pages/PositionContent'
 
 Vue.use(Router)
 
@@ -227,6 +228,11 @@ export default new Router({
           path: 'position',
           name: 'position',
           component: Position
+        },
+        {
+          path: 'position/:id',
+          name: 'positionContent',
+          component: PositionContent
         },
       ]
     }

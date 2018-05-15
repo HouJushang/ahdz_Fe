@@ -1,5 +1,5 @@
-const baseUrl = 'http://localhost:3000/';
-const baseHost = "http://localhost:3000";
+const baseUrl = '/';
+const baseHost = "";
 export {
   baseUrl,
   baseHost

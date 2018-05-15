@@ -11,9 +11,17 @@ function addPosition(data){
 function updatePosition(data){
   return putApi('admin/position', data)
 }
+function queryPositionContent(id){
+  return getApi(`admin/positionContent/${id}`)
+}
+function updatePositionContent(data){
+  return putApi(`admin/positionContent`, data)
+}
 export {
   queryPosition,
   delPosition,
   addPosition,
-  updatePosition
+  updatePosition,
+  queryPositionContent,
+  updatePositionContent
 }

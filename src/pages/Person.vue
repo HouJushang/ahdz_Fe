@@ -46,7 +46,7 @@
           </el-form-item>
           <el-form-item label="头像" prop="thumb">
             <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-              <img v-if="formData.avatar" :src="formData.avatar" class="avatar">
+              <img v-if="formData.avatar" :src="baseHost + formData.avatar" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
@@ -56,7 +56,7 @@
   </section>
 </template>
 <script>
-  import {baseUrl} from '../config'
+  import {baseUrl, baseHost} from '../config'
   import {getPersonById, setPerson} from "../api/person"
 
   export default {
@@ -64,6 +64,7 @@
     data() {
       return {
         baseUrl,
+        baseHost,
         config: {
           initialFrameWidth: null,
           initialFrameHeight: 400
@@ -91,7 +92,7 @@
       },
       handleAvatarSuccess(res, file) {
         if (res.code == 'success') {
-          this.formData.avatar = baseUrl + res.data.url
+          this.formData.avatar = '/' + res.data.url
         } else {
           this.$message.error('图片上传失败！');
         }

@@ -17,7 +17,11 @@ function getPersonById(id) {
 function setPerson(id, data){
   return postApi(`admin/person/${id}`, data)
 }
+function getPersonList(data){
+  return postApi('admin/personList', data)
+}
 export {
   getPersonById,
-  setPerson
+  setPerson,
+  getPersonList
 }
