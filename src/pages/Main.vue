@@ -152,7 +152,7 @@
       }
     },
     created() {
-      getApi('admin/menu').then(e => {
+      getApi('admin/shoRoleMenu').then(e => {
         this.menuData = e;
       })
     }

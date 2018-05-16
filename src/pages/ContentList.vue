@@ -23,6 +23,7 @@
   <section class="contentlist_page">
     <div class="contentlist_page_top">
       <p>{{category.name}}文章列表</p>
+      <el-button type="primary" icon="el-icon-edit" size="mini" @click="addContent" style="float: right;">发布</el-button>
     </div>
     <el-table :data="listData.rows" border style="width: 100%" size="mini">
       <el-table-column
@@ -190,6 +191,9 @@
         }).then(e => {
           this.positionData.data = e
         })
+      },
+      addContent(){
+        this.$router.push({name: this.category.model, params: { categoryId: this.category.id }})
       },
       position(row) {
         this.positionData.choose = []

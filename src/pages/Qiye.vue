@@ -18,79 +18,79 @@
       width: 178px
       height: 178px
       display: block
-  .formBody
-    display: flex
-    .formBodyLeft
-      width: 400px
-      box-sizing: border-box
-      padding-right: 30px
-    .formBodyRight
-      flex: 1
+    .formBody
+      display: flex
+      .formBodyLeft
+        width: 400px
+        box-sizing: border-box
+        padding-right: 30px
+      .formBodyRight
+        flex: 1
 </style>
 <template>
   <section class="news_page">
-    <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
-      <div class="formBody">
-        <div class="formBodyLeft">
-          <el-form-item label="标题" prop="title">
-            <el-input v-model="formData.title" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="地址" prop="address">
-            <el-input v-model="formData.address" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-model="formData.email" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="联系人" prop="concatPeople">
-            <el-input v-model="formData.concatPeople" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="电话" prop="phone">
-            <el-input v-model="formData.phone" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="官网" prop="website">
-            <el-input v-model="formData.website" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="手机" prop="phone">
-            <el-input v-model="formData.mobile" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="图片" prop="thumb">
-            <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-              <img v-if="formData.thumb" :src="formData.thumb" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-form-item>
-        </div>
-        <div class="formBodyRight">
-          公司简介
-          <UE :config=config ref="ue" :default-msg="formData.content"></UE>
-        </div>
-      </div>
+    <el-form ref="form" :model="formData" :rules="rules" label-width="80px" style="width: 500px">
+      <el-form-item label="标题" prop="title">
+        <el-input v-model="formData.title" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="地址" prop="address">
+        <el-input v-model="formData.address" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email">
+        <el-input v-model="formData.email" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="联系人" prop="concatPeople">
+        <el-input v-model="formData.concatPeople" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="电话" prop="phone">
+        <el-input v-model="formData.phone" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="官网" prop="website">
+        <el-input v-model="formData.website" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="手机" prop="phone">
+        <el-input v-model="formData.mobile" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="图片" prop="thumb">
+        <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
+                   :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <img v-if="formData.thumb" :src="formData.thumb" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
     </el-form>
-    <el-button type="primary" @click="submit">提交</el-button>
+    <div style="width: 80px; text-align: right; font-size: 14px; color: #606266; margin: 15px 0; box-sizing: border-box; padding-right: 12px">
+      公司简介
+    </div>
+    <UE :config=config ref="ue" :default-msg="formData.content"></UE>
+    <el-button type="primary" @click="submit" style="margin-top: 10px;">提交</el-button>
+    <el-button type="warning" @click="goBack" style="margin-top: 10px;">取消</el-button>
+
   </section>
 </template>
 <script>
   import UE from '../components/ue'
   import {baseUrl} from '../config'
   import {queryOneContent, addContent, updateContent} from "../api/content"
+
   export default {
     name: 'news_page',
     data() {
-        return {
-          baseUrl,
-          config: {
-            initialFrameWidth: null,
-            initialFrameHeight: 400
-          },
-          formData: {
-            thumb: '',
-          },
-          rules: {
-            title: [
-              {required: true, message: '标题必填', trigger: 'blur'},
-            ]
-          }
+      return {
+        baseUrl,
+        config: {
+          initialFrameWidth: null,
+          initialFrameHeight: 400
+        },
+        formData: {
+          thumb: '',
+        },
+        rules: {
+          title: [
+            {required: true, message: '标题必填', trigger: 'blur'},
+          ]
         }
+      }
     },
     methods: {
       beforeAvatarUpload(file) {
@@ -111,6 +111,9 @@
           this.$message.error('图片上传失败！');
         }
       },
+      goBack() {
+        window.history.go(-1)
+      },
       submit() {
         this.formData.content = this.$refs.ue.getUEContent();
         this.formData.categoryId = this.$route.params.categoryId;
@@ -123,18 +126,18 @@
             isPass = false;
           }
         });
-        if(!isPass){
+        if (!isPass) {
           return false;
         }
 
-        if(this.$route.params.id){
+        if (this.$route.params.id) {
           updateContent(this.$route.params.categoryId, this.formData).then(e => {
             this.$message.success('修改成功');
             this.$router.push({name: 'contentList', params: {categoryId: this.$route.params.categoryId}})
           }).catch(e => {
             this.$message.error(e);
           })
-        }else{
+        } else {
           addContent(this.$route.params.categoryId, this.formData).then(e => {
             this.$router.push({name: 'contentList', params: {categoryId: this.$route.params.categoryId}})
           }).catch(e => {

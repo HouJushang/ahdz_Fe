@@ -28,8 +28,8 @@
     <el-dialog :title="['添加','编辑'][dialogType]" :visible.sync="dialogShow" width="400px">
       <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
         <el-form-item label="管理员" prop="adminId">
-          <el-select  v-model.number="formData.adminId" size="mini">
-            <el-option v-for="item in adminRows" :value="item.id" :key="item.id" :label="item.username"></el-option>
+          <el-select  v-model.number="formData.adminId" :disabled="dialogType == 1" size="mini">
+            <el-option v-for="item in adminRows" :value="item.id" :key="item.id"  :label="item.username"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="角色" prop="roleId">

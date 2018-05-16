@@ -29,9 +29,7 @@
 </style>
 <template>
   <section class="news_page">
-    <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
-      <div class="formBody">
-        <div class="formBodyLeft">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="80px" style="width: 500px;">
           <el-form-item label="标题" prop="title">
             <el-input v-model="formData.title" size="mini"></el-input>
           </el-form-item>
@@ -56,24 +54,21 @@
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
-        </div>
-        <div class="formBodyRight">
           <el-form-item label="园区服务">
-            <el-input type="textarea" v-model="formData.fuwu"></el-input>
+            <el-input type="textarea" :rows="8" v-model="formData.fuwu"></el-input>
           </el-form-item>
           <el-form-item label="园区优势">
-            <el-input type="textarea" v-model="formData.youshi"></el-input>
+            <el-input type="textarea" :rows="8"  v-model="formData.youshi"></el-input>
           </el-form-item>
           <el-form-item label="入园条件">
-            <el-input type="textarea" v-model="formData.tiaojian"></el-input>
+            <el-input type="textarea" :rows="8"  v-model="formData.tiaojian"></el-input>
           </el-form-item>
           <!--<UE :config=config ref="ue1" :default-msg="formData.fuwu"></UE>-->
           <!--<UE :config=config ref="ue2" :default-msg="formData.youshi"></UE>-->
           <!--<UE :config=config ref="ue3" :default-msg="formData.tiaojian"></UE>-->
-        </div>
-      </div>
     </el-form>
     <el-button type="primary" @click="submit">提交</el-button>
+    <el-button type="warning" @click="goBack">取消</el-button>
   </section>
 </template>
 <script>
@@ -127,6 +122,9 @@
         } else {
           this.$message.error('图片上传失败！');
         }
+      },
+      goBack() {
+        window.history.go(-1)
       },
       submit() {
         // this.formData.fuwu = this.$refs.ue1.getUEContent();

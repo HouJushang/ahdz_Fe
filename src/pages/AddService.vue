@@ -71,7 +71,7 @@
       <el-form-item label="图片" prop="image">
         <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.image" :src="formData.image" class="avatar">
+          <img v-if="formData.image" :src="baseHost + formData.image" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -89,7 +89,7 @@
 </template>
 <script>
   import UE from '../components/ue'
-  import {baseUrl} from '../config'
+  import {baseUrl, baseHost} from '../config'
   import {queryOneService, addService, updateService} from "../api/service"
 
   export default {
@@ -97,6 +97,7 @@
     data() {
       return {
         baseUrl,
+        baseHost,
         config: {
           initialFrameWidth: null,
           initialFrameHeight: 400

@@ -37,6 +37,8 @@
       </el-form-item>
     </el-form>
     <el-button type="primary" @click="submit">提交</el-button>
+    <el-button type="warning" @click="goBack">取消</el-button>
+
   </section>
 </template>
 <script>
@@ -80,6 +82,9 @@
         } else {
           this.$message.error('图片上传失败！');
         }
+      },
+      goBack() {
+        window.history.go(-1)
       },
       submit() {
         this.formData.categoryId = this.$route.params.categoryId;

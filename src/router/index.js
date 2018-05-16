@@ -30,6 +30,7 @@ import Position from '@/pages/Position'
 import PersonList from '@/pages/PersonList'
 import CompanyList from '@/pages/CompanyList'
 import PositionContent from '@/pages/PositionContent'
+import RoleMenu from '@/pages/RoleMenu'
 
 Vue.use(Router)
 
@@ -69,6 +70,11 @@ export default new Router({
           path: 'adminRole',
           name: 'adminRole',
           component: AdminRole
+        },
+        {
+          path: 'roleMenu',
+          name: 'roleMenu',
+          component: RoleMenu
         },
         {
           path: 'category',
