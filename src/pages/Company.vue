@@ -29,75 +29,83 @@
 </style>
 <template>
   <section class="news_page">
-    <el-form ref="form" :model="formData" :rules="rules" label-width="200px">
-      <div class="formBody">
-        <div class="formBodyLeft">
-          <el-form-item label="logo" prop="logo">
-            <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
-                       :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-              <img v-if="formData.logo" :src="baseHost + formData.logo" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-form-item>
-          <el-form-item label="企业名称" prop="companyName">
-            <el-input v-model="formData.companyName" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="组织机构代码或工商注册号" prop="zzjgdm">
-            <el-input v-model="formData.zzjgdm" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="企业注册类型" prop="qyzclx">
-            <el-input v-model="formData.qyzclx" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="行政区划代码" prop="xzdm">
-            <el-input v-model="formData.xzdm" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="单位性质" prop="dwxz">
-            <el-input v-model="formData.dwxz" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="开业时间" prop="kysj">
-            <el-input v-model="formData.kysj" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="控股情况" prop="kgqk">
-            <el-input v-model="formData.kgqk" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="法定代表人" prop="fddbr">
-            <el-input v-model="formData.fddbr" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="行业代码" prop="hedm">
-            <el-input v-model="formData.hedm" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="邮政编码" prop="yzbm">
-            <el-input v-model="formData.yzbm" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="公司网址" prop="gswz">
-            <el-input v-model="formData.gswz" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="通讯地址" prop="txdz">
-            <el-input v-model="formData.txdz" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="主要产品或主营业务" prop="zycp">
-            <el-input v-model="formData.zycp" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="姓名" prop="lxrname">
-            <el-input v-model="formData.lxrname" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="电话" prop="lxrphone">
-            <el-input v-model="formData.lxrphone" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="传真" prop="chuanzhen">
-            <el-input v-model="formData.chuanzhen" size="mini"></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱" prop="lxremail">
-            <el-input v-model="formData.lxremail" size="mini"></el-input>
-          </el-form-item>
-        </div>
-        <div class="formBodyRight">
-          企业简介
-          <UE :config=config ref="ue" :default-msg="formData.qyjj"></UE>
-        </div>
-      </div>
+    <el-form ref="form" :model="formData" :rules="rules" label-width="200px" style="width: 800px">
+      <el-form-item label="logo" prop="logo">
+        <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
+                   :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <img v-if="formData.logo" :src="baseHost + formData.logo" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="企业名称" prop="companyName">
+        <el-input v-model="formData.companyName" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="组织机构代码或工商注册号" prop="zzjgdm">
+        <el-input v-model="formData.zzjgdm" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="企业注册类型" prop="qyzclx">
+        <el-input v-model="formData.qyzclx" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="行政区划代码" prop="xzdm">
+        <el-input v-model="formData.xzdm" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="单位性质" prop="dwxz">
+        <el-input v-model="formData.dwxz" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="开业时间" prop="kysj">
+        <el-input v-model="formData.kysj" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="控股情况" prop="kgqk">
+        <el-input v-model="formData.kgqk" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="法定代表人" prop="fddbr">
+        <el-input v-model="formData.fddbr" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="行业代码" prop="hedm">
+        <el-input v-model="formData.hedm" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="邮政编码" prop="yzbm">
+        <el-input v-model="formData.yzbm" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="公司网址" prop="gswz">
+        <el-input v-model="formData.gswz" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="通讯地址" prop="txdz">
+        <el-input v-model="formData.txdz" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="主要产品或主营业务" prop="zycp">
+        <el-input v-model="formData.zycp" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="姓名" prop="lxrname">
+        <el-input v-model="formData.lxrname" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="电话" prop="lxrphone">
+        <el-input v-model="formData.lxrphone" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="传真" prop="chuanzhen">
+        <el-input v-model="formData.chuanzhen" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="lxremail">
+        <el-input v-model="formData.lxremail" size="mini"></el-input>
+      </el-form-item>
     </el-form>
-    <el-button type="primary" @click="submit">提交</el-button>
+    <div style="display: flex">
+      <div style="width: 200px; padding-right: 12px; box-sizing: border-box; text-align: right">
+        内容
+      </div>
+      <div style="flex: 1;">
+        <UE :config=config ref="ue" :default-msg="formData.qyjj"></UE>
+      </div>
+    </div>
+    <div style="display: flex">
+      <div style="width: 200px; padding-right: 12px; box-sizing: border-box; text-align: right">
+
+      </div>
+      <div style="flex: 1;">
+        <el-button type="primary" style="margin-top: 10px;" @click="submit">提交</el-button>
+        <el-button type="warning" style="margin-top: 10px;" @click="goBack">取消</el-button>
+      </div>
+    </div>
   </section>
 </template>
 <script>
@@ -162,6 +170,9 @@
           this.$message.error('图片上传失败！');
         }
       },
+      goBack() {
+        window.history.go(-1)
+      },
       submit() {
         this.formData.qyjj = this.$refs.ue.getUEContent();
 
@@ -177,6 +188,7 @@
           return false;
         }
         setCompany(this.$route.params.userId, this.formData).then(e => {
+          this.$router.push({name: 'userList'})
           this.$message.success('操作成功！');
         }).catch(e => {
           this.$message.error(e.message);
@@ -188,7 +200,7 @@
     },
     created() {
       getcompanyById(this.$route.params.userId).then(e => {
-        if(e != null){
+        if (e != null) {
           this.formData = e;
         }
       })
