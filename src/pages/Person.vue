@@ -111,6 +111,7 @@
         }
         setPerson(this.$route.params.userId, this.formData).then(e => {
           this.$message.success('操作成功！');
+          this.$router.push({name: 'personList'})
         }).catch(e => {
           this.$message.error(e.message);
         })

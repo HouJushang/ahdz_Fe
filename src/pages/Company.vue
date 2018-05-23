@@ -76,14 +76,11 @@
       <el-form-item label="主要产品或主营业务" prop="zycp">
         <el-input v-model="formData.zycp" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="姓名" prop="lxrname">
+      <el-form-item label="联系人" prop="lxrname">
         <el-input v-model="formData.lxrname" size="mini"></el-input>
       </el-form-item>
       <el-form-item label="电话" prop="lxrphone">
         <el-input v-model="formData.lxrphone" size="mini"></el-input>
-      </el-form-item>
-      <el-form-item label="传真" prop="chuanzhen">
-        <el-input v-model="formData.chuanzhen" size="mini"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="lxremail">
         <el-input v-model="formData.lxremail" size="mini"></el-input>
@@ -188,7 +185,7 @@
           return false;
         }
         setCompany(this.$route.params.userId, this.formData).then(e => {
-          this.$router.push({name: 'userList'})
+          this.$router.push({name: 'companyList'})
           this.$message.success('操作成功！');
         }).catch(e => {
           this.$message.error(e.message);

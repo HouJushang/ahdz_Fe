@@ -144,7 +144,7 @@
         this.showForm(1)
       },
       del(row) {
-        this.$confirm(`此操作将永久删除《${row.phone}》, 是否继续?`, '提示', {
+        this.$confirm(`此操作将永久删除《${row.user.phone}》, 是否继续?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

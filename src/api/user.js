@@ -5,6 +5,9 @@ function queryUser(data){
 function delUser(data){
   return delApi('admin/websiteUser', data)
 }
+function delUser2(data){
+  return delApi('admin/websiteUser2', data)
+}
 function addUser(data){
   return postApi('admin/websiteUser', data)
 }
@@ -15,5 +18,6 @@ export {
   queryUser,
   delUser,
   addUser,
-  updateUser
+  updateUser,
+  delUser2
 }

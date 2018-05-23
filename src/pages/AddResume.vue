@@ -25,6 +25,12 @@
         <el-radio v-model="formData.jiehun" :label="0">是</el-radio>
         <el-radio v-model="formData.jiehun" :label="1">否</el-radio>
       </el-form-item>
+      <el-form-item label="毕业学校" prop="school">
+        <el-input v-model="formData.school" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="学历" prop="xueli">
+        <el-input v-model="formData.xueli" size="mini"></el-input>
+      </el-form-item>
       <el-form-item label="专业" prop="zhuanye">
         <el-input v-model="formData.zhuanye" size="mini"></el-input>
       </el-form-item>
@@ -47,7 +53,6 @@
         <el-radio v-model="formData.isShow" :label="0">停用</el-radio>
         <el-radio v-model="formData.isShow" :label="1">显示</el-radio>
       </el-form-item>
-      *求职意向
       <el-form-item label="薪资" prop="xinzi">
         <el-input v-model="formData.xinzi" size="mini"></el-input>
       </el-form-item>
@@ -57,14 +62,17 @@
       <el-form-item label="职位" prop="zhiwei">
         <el-input v-model="formData.zhiwei" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="行业" prop="hangy">
-        <el-input v-model="formData.xinzi" size="mini"></el-input>
+      <el-form-item label="行业" prop="hangye">
+        <el-input v-model="formData.hangye" size="mini"></el-input>
       </el-form-item>
       <div v-for="(item, index) in formData.gongzuo">
         <span class="formTile">工作经验 - {{index + 1}} </span><el-button type="danger" size="mini" @click="formData.gongzuo.splice(index, 1)">删除</el-button>
         <el-form-item label="时间">
           <el-input v-model="item.startTime" size="mini" style="width: 120px"></el-input> -
           <el-input v-model="item.endTime" size="mini" style="width: 120px"></el-input>
+        </el-form-item>
+        <el-form-item label="公司" prop="companyName">
+          <el-input v-model="item.companyName" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="岗位" prop="gangwei">
           <el-input v-model="item.gangwei" size="mini"></el-input>
