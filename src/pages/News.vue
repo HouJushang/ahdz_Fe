@@ -53,12 +53,13 @@
     <div style="width: 80px; text-align: right; font-size: 14px; color: #606266; margin: 15px 0; box-sizing: border-box; padding-right: 12px">
       内容
     </div>
-    <UE :config=config ref="ue" :defaultMsg="formData.content"></UE>
+    <tinymce :height="300" ref="tinymce" v-model="formData.content"></tinymce>
     <el-button type="primary" style="margin-top: 10px;" @click="submit">提交</el-button>
     <el-button type="warning" style="margin-top: 10px;" @click="goBack">取消</el-button>
   </section>
 </template>
 <script>
+  import Tinymce from '../components/Tinymce/'
   import UE from '../components/ue'
   import {baseUrl, baseHost} from '../config'
   import {queryOneContent, addContent, updateContent} from "../api/content"
@@ -111,7 +112,8 @@
         window.history.go(-1)
       },
       submit() {
-        this.formData.content = this.$refs.ue.getUEContent();
+        console.log(this.$refs.tinymce.getContent())
+        this.formData.content = this.$refs.tinymce.getContent();
         this.formData.categoryId = this.$route.params.categoryId;
 
         var isPass = false
@@ -143,7 +145,7 @@
       }
     },
     components: {
-      UE
+      UE,Tinymce
     },
     created() {
       if (this.$route.params.id) {
