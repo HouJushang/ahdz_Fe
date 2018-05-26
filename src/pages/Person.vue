@@ -117,9 +117,6 @@
         })
       }
     },
-    components: {
-      UE
-    },
     created() {
       getPersonById(this.$route.params.userId).then(e => {
         if(e != null){

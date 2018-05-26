@@ -72,7 +72,6 @@
   </section>
 </template>
 <script>
-  import UE from '../components/ue'
   import {baseUrl, baseHost} from '../config'
   import {queryOneContent, addContent, updateContent} from "../api/content"
   export default {
@@ -160,9 +159,6 @@
           })
         }
       }
-    },
-    components: {
-      UE
     },
     created() {
       if (this.$route.params.id) {

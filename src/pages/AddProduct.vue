@@ -60,11 +60,11 @@
         </el-upload>
       </el-form-item>
       <div style="display: flex">
-        <div style="width: 80px; padding-right: 12px; box-sizing: border-box; text-align: right">
-          简介
+        <div style="width: 80px; padding-right: 12px; box-sizing: border-box; text-align: right; font-size: 14px; ">
+          商品详情
         </div>
         <div style="flex: 1;">
-          <UE :config=config ref="ue" :default-msg="formData.content"></UE>
+          <tinymce :height="300" ref="tinymce" v-model="formData.content"></tinymce>
         </div>
       </div>
     </el-form>
@@ -72,9 +72,10 @@
   </section>
 </template>
 <script>
-  import UE from '../components/ue'
+  // import UE from '../components/ue'
   import {baseHost, baseUrl} from '../config'
   import {queryOneProduct, addProduct, updateProduct} from "../api/product"
+  import Tinymce from '../components/Tinymce/'
 
   export default {
     name: 'news_page',
@@ -87,7 +88,8 @@
           initialFrameHeight: 400
         },
         formData: {
-          isShow: 0
+          isShow: 0,
+          image: ''
         },
         rules: {
           title: [
@@ -98,7 +100,6 @@
     },
     methods: {
       submit() {
-        this.formData.content = this.$refs.ue.getUEContent();
 
         var isPass = false
         this.$refs['form'].validate((valid) => {
@@ -146,7 +147,7 @@
       },
     },
     components: {
-      UE
+      Tinymce
     },
     created() {
       if (this.$route.params.id) {

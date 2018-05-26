@@ -88,10 +88,10 @@
     </el-form>
     <div style="display: flex">
       <div style="width: 200px; padding-right: 12px; box-sizing: border-box; text-align: right">
-        内容
+        企业简介
       </div>
       <div style="flex: 1;">
-        <UE :config=config ref="ue" :default-msg="formData.qyjj"></UE>
+        <tinymce :height="300" ref="tinymce" v-model="formData.qyjj"></tinymce>
       </div>
     </div>
     <div style="display: flex">
@@ -106,7 +106,7 @@
   </section>
 </template>
 <script>
-  import UE from '../components/ue'
+  import Tinymce from '../components/Tinymce/'
   import {baseUrl, baseHost} from '../config'
   import {getcompanyById, setCompany} from "../api/company"
 
@@ -171,8 +171,6 @@
         window.history.go(-1)
       },
       submit() {
-        this.formData.qyjj = this.$refs.ue.getUEContent();
-
         var isPass = false
         this.$refs['form'].validate((valid) => {
           if (valid) {
@@ -193,7 +191,7 @@
       }
     },
     components: {
-      UE
+      Tinymce
     },
     created() {
       getcompanyById(this.$route.params.userId).then(e => {

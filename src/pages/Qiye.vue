@@ -62,14 +62,14 @@
     <div style="width: 80px; text-align: right; font-size: 14px; color: #606266; margin: 15px 0; box-sizing: border-box; padding-right: 12px">
       公司简介
     </div>
-    <UE :config=config ref="ue" :default-msg="formData.content"></UE>
+    <tinymce :height="300" ref="tinymce" v-model="formData.content"></tinymce>
     <el-button type="primary" @click="submit" style="margin-top: 10px;">提交</el-button>
     <el-button type="warning" @click="goBack" style="margin-top: 10px;">取消</el-button>
 
   </section>
 </template>
 <script>
-  import UE from '../components/ue'
+  import Tinymce from '../components/Tinymce/'
   import {baseUrl} from '../config'
   import {queryOneContent, addContent, updateContent} from "../api/content"
 
@@ -115,7 +115,6 @@
         window.history.go(-1)
       },
       submit() {
-        this.formData.content = this.$refs.ue.getUEContent();
         this.formData.categoryId = this.$route.params.categoryId;
 
         var isPass = false
@@ -147,7 +146,7 @@
       }
     },
     components: {
-      UE
+      Tinymce
     },
     created() {
       if (this.$route.params.id) {

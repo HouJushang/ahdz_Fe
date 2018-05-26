@@ -80,7 +80,7 @@
           简介
         </div>
         <div style="flex: 1;">
-          <UE :config=config ref="ue" :default-msg="formData.content"></UE>
+          <tinymce :height="300" ref="tinymce" v-model="formData.content"></tinymce>
         </div>
       </div>
     </el-form>
@@ -88,7 +88,7 @@
   </section>
 </template>
 <script>
-  import UE from '../components/ue'
+  import Tinymce from '../components/Tinymce/'
   import {baseUrl, baseHost} from '../config'
   import {queryOneService, addService, updateService} from "../api/service"
 
@@ -115,8 +115,6 @@
     },
     methods: {
       submit() {
-        this.formData.content = this.$refs.ue.getUEContent();
-
         var isPass = false
         this.$refs['form'].validate((valid) => {
           if (valid) {
@@ -163,7 +161,7 @@
       },
     },
     components: {
-      UE
+      Tinymce
     },
     created() {
       if (this.$route.params.id) {

@@ -1,12 +1,23 @@
 <style lang="sass" scoped>
   .formTile
     font-size: 16px
+  .avatar
+    width: 178px
+    height: 178px
+    display: block
 </style>
 <template>
   <section>
     <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="姓名" prop="name">
         <el-input v-model="formData.name" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="头像" prop="avatar">
+        <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
+                   :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <img v-if="formData.avatar" :src="baseHost + formData.avatar" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
       <el-form-item label="用户ID" prop="personId">
         <el-input v-model="formData.personId" size="mini"></el-input>
@@ -62,6 +73,12 @@
       <el-form-item label="职位" prop="zhiwei">
         <el-input v-model="formData.zhiwei" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="到岗时间" prop="shijian">
+        <el-input v-model="formData.shijian" size="mini"></el-input>
+      </el-form-item>
+      <el-form-item label="工作类型" prop="leixing">
+        <el-input v-model="formData.leixing" size="mini"></el-input>
+      </el-form-item>
       <el-form-item label="行业" prop="hangye">
         <el-input v-model="formData.hangye" size="mini"></el-input>
       </el-form-item>
@@ -115,13 +132,12 @@
         </el-form-item>
       </div>
       <el-button style="margin-left: 80px; margin: 12px 0;" size="mini" type="success" @click="formData.peixun.push({})">添加培训经历</el-button>
-
     </el-form>
     <el-button style="margin-left: 80px; margin-top: 12px;" type="primary" @click="submit">提交</el-button>
   </section>
 </template>
 <script>
-  import {baseUrl} from '../config'
+  import {baseUrl,baseHost} from '../config'
   import {queryOneResume, addResume, updateResume} from "../api/resume"
 
   export default {
@@ -129,6 +145,7 @@
     data() {
       return {
         baseUrl,
+        baseHost,
         config: {
           initialFrameWidth: null,
           initialFrameHeight: 400
@@ -139,7 +156,8 @@
           jiehun: 0,
           gongzuo: [],
           jiaoyu: [],
-          peixun: []
+          peixun: [],
+          avatar: ''
         },
         rules: {
           title: [
@@ -149,6 +167,25 @@
       }
     },
     methods: {
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/gif';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG png gif 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
+      handleAvatarSuccess(res, file) {
+        if (res.code == 'success') {
+          this.formData.avatar = "/" + res.data.url
+        } else {
+          this.$message.error('图片上传失败！');
+        }
+      },
+
       submit() {
 
         var isPass = false

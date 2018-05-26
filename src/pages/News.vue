@@ -60,7 +60,6 @@
 </template>
 <script>
   import Tinymce from '../components/Tinymce/'
-  import UE from '../components/ue'
   import {baseUrl, baseHost} from '../config'
   import {queryOneContent, addContent, updateContent} from "../api/content"
 
@@ -112,8 +111,6 @@
         window.history.go(-1)
       },
       submit() {
-        console.log(this.$refs.tinymce.getContent())
-        this.formData.content = this.$refs.tinymce.getContent();
         this.formData.categoryId = this.$route.params.categoryId;
 
         var isPass = false
@@ -145,7 +142,7 @@
       }
     },
     components: {
-      UE,Tinymce
+      Tinymce
     },
     created() {
       if (this.$route.params.id) {

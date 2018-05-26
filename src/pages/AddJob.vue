@@ -65,11 +65,11 @@
         <el-radio v-model="formData.isShow" :label="1">展示</el-radio>
       </el-form-item>
       <div style="display: flex">
-        <div style="width: 80px; padding-right: 12px; box-sizing: border-box; text-align: right">
-          简介
+        <div style="width: 80px; padding-right: 12px; box-sizing: border-box; text-align: right; font-size: 14px;">
+          职位信息
         </div>
         <div style="flex: 1;">
-          <UE :config=config ref="ue" :default-msg="formData.content"></UE>
+          <tinymce :height="300" ref="tinymce" v-model="formData.xiangqing"></tinymce>
         </div>
       </div>
     </el-form>
@@ -77,7 +77,7 @@
   </section>
 </template>
 <script>
-  import UE from '../components/ue'
+  import Tinymce from '../components/Tinymce/'
   import {baseUrl} from '../config'
   import {queryOneJob, addJob, updateJob} from "../api/job"
 
@@ -91,7 +91,8 @@
           initialFrameHeight: 400
         },
         formData: {
-          isShow: 0
+          isShow: 0,
+          content: ''
         },
         rules: {
           title: [
@@ -102,8 +103,6 @@
     },
     methods: {
       submit() {
-        this.formData.xiangqing = this.$refs.ue.getUEContent();
-
         var isPass = false
         this.$refs['form'].validate((valid) => {
           if (valid) {
@@ -132,7 +131,7 @@
       }
     },
     components: {
-      UE
+      Tinymce
     },
     created() {
       if (this.$route.params.id) {
