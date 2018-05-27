@@ -8,6 +8,7 @@ import Role from '@/pages/Role'
 import Admin from '@/pages/Admin'
 import AdminRole from '@/pages/AdminRole'
 import News from '@/pages/News'
+import Video from '@/pages/Video'
 import Category from '@/pages/Category'
 import CategoryList from '@/pages/CategoryList'
 import ContentList from '@/pages/ContentList'
@@ -97,6 +98,16 @@ export default new Router({
           path: 'news/:categoryId/:id',
           name: 'newsEdit',
           component: News
+        },
+        {
+          path: 'video/:categoryId',
+          name: 'video',
+          component: Video
+        },
+        {
+          path: 'video/:categoryId/:id',
+          name: 'videoEdit',
+          component: Video
         },
         {
           path: 'slide/:categoryId',
