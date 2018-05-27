@@ -23,13 +23,18 @@
         </template>
       </el-table-column>
       <el-table-column prop="model" label="模型"></el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button type="danger" icon="el-icon-delete" size="mini" @click="showDel(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </section>
 </template>
 
 <script>
   import {queryPositionContent, updatePosition} from '../api/position'
-  import {updatePositionContent} from '../api/positionContent'
+  import {updatePositionContent, delPositionContent} from '../api/positionContent'
   import dateFormat from '../util/dateFormat'
   export default {
     name: 'position_page',
@@ -54,6 +59,22 @@
       getRows() {
         queryPositionContent(this.$route.params.id).then(e => {
           this.rows = e;
+        })
+      },
+      showDel(row) {
+        this.$confirm('此操作将删除该条数据, 是否继续?', '提示', {
+          type: 'warning'
+        }).then(() => {
+          this.del(row)
+        }).catch(() => {
+          console.log('取消删除')
+        });
+      },
+      del(row) {
+        delPositionContent({id: row.id}).then(e => {
+          this.getRows();
+        }).cache(e => {
+          this.$message.error(e)
         })
       },
       blurHander(e){
