@@ -215,7 +215,7 @@
       positionSubmit() {
         addPositionContent({
           id: this.positionData.row.id,
-          model: 'service',
+          model: 'company',
           choose: this.positionData.choose
         }).then(e =>{
           this.positionData.show = false;

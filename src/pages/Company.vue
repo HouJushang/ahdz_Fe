@@ -142,7 +142,7 @@
           lxremail: '',
         },
         rules: {
-          title: [
+          companyName: [
             {required: true, message: '标题必填', trigger: 'blur'},
           ],
           lxrname: [

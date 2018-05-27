@@ -16,6 +16,7 @@
     <el-table :data="rows" border style="width: 100%" size="mini">
       <el-table-column type="index" width="50"></el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
+      <el-table-column prop="companyName" label="公司"></el-table-column>
       <el-table-column prop="order" label="排序(大到小)">
         <template slot-scope="scope">
           <input :value="scope.row.order" :idValue="scope.row.id" type="number" @blur="blurHander"/>
