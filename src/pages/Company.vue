@@ -144,6 +144,21 @@
         rules: {
           title: [
             {required: true, message: '标题必填', trigger: 'blur'},
+          ],
+          lxrname: [
+            {required: true, message: '联系人必填', trigger: 'blur'},
+          ],
+          lxrphone: [
+            {required: true, message: '电话必填', trigger: 'blur'},
+          ],
+          lxremail: [
+            {required: true, message: '联系人必填', trigger: 'blur'},
+          ],
+          lxrname: [
+            {required: true, message: '联系人必填', trigger: 'blur'},
+          ],
+          txdz: [
+            {required: true, message: '地址必填', trigger: 'blur'},
           ]
         }
       }

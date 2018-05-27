@@ -39,14 +39,26 @@
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditForm(scope.row.user)">基本信息</el-button>
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="goDetail(scope.row)">扩展信息</el-button>
           <el-button type="danger" icon="el-icon-delete" size="mini" @click="showDel(scope.row)">删除</el-button>
+          <el-button type="primary" size="mini" icon="el-icon-star-off"  @click="position(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="选择推荐位" :visible.sync="positionData.show" width="40%">
+      <el-checkbox-group v-model="positionData.choose">
+        <el-checkbox v-for="item in positionData.data" :label="item.id" style="margin-left: 10px;">{{item.title}}</el-checkbox>
+      </el-checkbox-group>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="positionData.show = false" size="mini">取 消</el-button>
+        <el-button type="primary" @click="positionSubmit" size="mini">确 定</el-button>
+      </span>
+    </el-dialog>
   </section>
 </template>
 
 <script>
   import {queryUser, delUser2, addUser, updateUser} from '../api/user'
+  import {addPositionContent, queryPositionContent} from '../api/positionContent'
+  import {queryPosition} from '../api/position'
   import {queryCompanyList} from '../api/company'
   export default {
     name: 'user_page',
@@ -78,6 +90,12 @@
             {required: true, message: '请输入密码', trigger: 'blur'},
             {min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur'}
           ],
+        },
+        positionData: {
+          show: false,
+          data: [],
+          choose: [],
+          row: null,
         },
       }
     },
@@ -170,9 +188,45 @@
           this.listData = e;
         })
       },
+      getPostion() {
+        queryPosition({
+          model: 'company'
+        }).then(e => {
+          this.positionData.data = e
+        })
+      },
+      position(row) {
+        this.positionData.choose = []
+        this.positionData.show = true
+        this.positionData.row = row
+        queryPositionContent({
+          artId: row.id,
+          model: 'company'
+        }).then(e => {
+          if(e.length > 0){
+            console.log(e)
+            e.forEach(e => {
+              this.positionData.choose.push(e.positionId);
+            })
+          }
+
+        })
+      },
+      positionSubmit() {
+        addPositionContent({
+          id: this.positionData.row.id,
+          model: 'service',
+          choose: this.positionData.choose
+        }).then(e =>{
+          this.positionData.show = false;
+        }).catch(e => {
+          this.$message.error(e);
+        })
+      },
     },
     created() {
       this.getRows();
+      this.getPostion();
     }
   }
 </script>
