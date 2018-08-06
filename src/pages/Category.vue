@@ -86,6 +86,12 @@
         <el-form-item label="描述" prop="description">
           <el-input v-model="formData.description" size="mini"></el-input>
         </el-form-item>
+        <el-form-item label="主显字段" prop="main">
+          <el-input v-model="formData.main" size="mini"></el-input>
+        </el-form-item>
+        <el-form-item label="主显名称" prop="label">
+          <el-input v-model="formData.label" size="mini"></el-input>
+        </el-form-item>
         <el-form-item label="关键词" prop="keywords">
           <el-input v-model="formData.keywords" size="mini"></el-input>
         </el-form-item>

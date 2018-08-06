@@ -22,15 +22,15 @@
 <template>
   <section class="contentlist_page">
     <div class="contentlist_page_top">
-      <p>{{category.name}}文章列表</p>
+      <p>{{category.name}}--列表</p>
       <el-button type="primary" icon="el-icon-edit" size="mini" @click="addContent" style="float: right;">发布</el-button>
     </div>
-    <el-table :data="listData.rows" border style="width: 100%" size="mini">
+    <el-table :data="listData.rows" border style="width: 100%" size="mini" v-if="category.label">
       <el-table-column
         type="index"
         width="50">
       </el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
+      <el-table-column :prop="category.main" :label="category.label"></el-table-column>
       <el-table-column prop="createdAt" label="创建时间"  width="150">
         <template slot-scope="scope">
           <span>{{dateFormat(new Date(scope.row.createdAt))}}</span>
@@ -43,7 +43,12 @@
       </el-table-column>
       <el-table-column prop="status" label="状态"  width="80">
         <template slot-scope="scope">
-          <el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['待审核', '通过', '未通过'][scope.row.status]}}</el-tag>
+          <el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['待审核', '显示', '隐藏'][scope.row.status]}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="order" label="排序(大到小)">
+        <template slot-scope="scope">
+          <input :value="scope.row.order" :idValue="scope.row.id" type="number" @change="blurHander"/>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -51,7 +56,7 @@
           <el-button type="primary" icon="el-icon-edit"  size="mini" @click="edit(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete"  size="mini" @click="del(scope.row)"></el-button>
           <el-button type="warning" size="mini" icon="el-icon-setting"  @click="check(scope.row)"></el-button>
-          <el-button type="primary" size="mini" icon="el-icon-star-off"  @click="position(scope.row)"></el-button>
+          <el-button type="primary" size="mini" icon="el-icon-star-off" v-if="positionData.data.length > 0"  @click="position(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,10 +66,10 @@
       @size-change="sizeChange" @current-change="currentChange"
       :total="listData.count">
     </el-pagination>
-    <el-dialog :title="`《${checkDialog.title}》- 审核`" :visible.sync="checkDialog.show" width="30%">
+    <el-dialog :title="`《${checkDialog.title}》`" :visible.sync="checkDialog.show" width="30%">
       <div>
-        <el-radio v-model="checkDialog.status" :label="1">通过</el-radio>
-        <el-radio v-model="checkDialog.status" :label="2">未通过</el-radio>
+        <el-radio v-model="checkDialog.status" :label="1">显示</el-radio>
+        <el-radio v-model="checkDialog.status" :label="2">隐藏</el-radio>
       </div>
       <div style="padding: 20px 0;">
         <el-button type="primary" size="mini" style="float: right;" @click="checkSubmit">提交</el-button>
@@ -84,7 +89,7 @@
 
 <script>
   import {getCategoryById} from '../api/category'
-  import {queryContent, delContent, checkContent} from "../api/content";
+  import {queryContent, delContent, checkContent, updateContent} from "../api/content";
   import {addPositionContent, queryPositionContent} from '../api/positionContent'
   import dateFormat from '../util/dateFormat'
   import {queryPosition} from '../api/position'
@@ -120,6 +125,20 @@
       }
     },
     methods : {
+      blurHander(e){
+        const order = parseInt(e.target.value);
+        if(!(order >= 0)){
+          return false;
+        }
+        updateContent(this.category.id, {id: parseInt(e.target.getAttribute('idValue')), order: order}).then(e => {
+          this.$message({
+            message: '排序更新成功',
+            type: 'success'
+          });
+        }).catch(e => {
+          this.getRows()
+        })
+      },
       getCategory() {
         getCategoryById(this.$route.params.categoryId).then(e => {
           this.category = e

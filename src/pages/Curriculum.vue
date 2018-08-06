@@ -29,24 +29,18 @@
 </style>
 <template>
   <section class="news_page">
-    <el-form ref="form" :model="formData" :rules="rules" label-width="80px" size="mini">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="80px" size="mini" style="width: 500px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="地址" prop="address">
-        <el-input v-model="formData.address" size="mini"></el-input>
+      <el-form-item label="摘要" prop="description">
+        <el-input type="textarea" :rows="5" v-model="formData.description" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="面积" prop="mianji">
-        <el-input v-model="formData.mianji" size="mini"></el-input>
+      <el-form-item label="作者" prop="author">
+        <el-input v-model="formData.author" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="联系人" prop="concatPeople">
-        <el-input v-model="formData.concatPeople" size="mini"></el-input>
-      </el-form-item>
-      <el-form-item label="配套" prop="peitao">
-        <el-input v-model="formData.peitao" size="mini"></el-input>
-      </el-form-item>
-      <el-form-item label="电话" prop="phone">
-        <el-input v-model="formData.phone" size="mini"></el-input>
+      <el-form-item label="来源" prop="origin">
+        <el-input v-model="formData.origin" size="mini"></el-input>
       </el-form-item>
       <el-form-item label="图片" prop="thumb">
         <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
@@ -55,29 +49,21 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="园区服务">
-        <tinymce :height="300" ref="tinymce" v-model="formData.fuwu"></tinymce>
-        <!--<el-input type="textarea" :rows="8" v-model="formData.fuwu"></el-input>-->
+      <el-form-item label="视频" prop="origin">
+        <el-upload class="upload-demo" :action="baseUrl + 'upload'" :on-success="handleSuccess" multiple :limit="1">
+          <el-button size="mini" type="primary">点击上传</el-button>
+        </el-upload>
       </el-form-item>
-      <el-form-item label="园区优势">
-        <tinymce :height="300" ref="tinymce" v-model="formData.youshi"></tinymce>
-      </el-form-item>
-      <el-form-item label="入园条件">
-        <tinymce :height="300" ref="tinymce" v-model="formData.tiaojian"></tinymce>
-      </el-form-item>
-      <!--<UE :config=config ref="ue1" :default-msg="formData.fuwu"></UE>-->
-      <!--<UE :config=config ref="ue2" :default-msg="formData.youshi"></UE>-->
-      <!--<UE :config=config ref="ue3" :default-msg="formData.tiaojian"></UE>-->
       <el-form-item>
-        <el-button type="primary" @click="submit">提交</el-button>
-        <el-button type="warning" @click="goBack">取消</el-button>
+        <el-button type="primary" style="margin-top: 10px;" @click="submit">提交</el-button>
+        <el-button type="warning" style="margin-top: 10px;" @click="goBack">取消</el-button>
       </el-form-item>
     </el-form>
   </section>
 </template>
 <script>
+  import Tinymce from '../components/Tinymce/'
   import {baseUrl, baseHost} from '../config'
-  import tinymce from '../components/Tinymce/'
   import {queryOneContent, addContent, updateContent} from "../api/content"
 
   export default {
@@ -92,16 +78,11 @@
         },
         formData: {
           title: '',
-          content: '',
-          address: '',
+          author: '',
+          origin: '',
+          video: '',
           thumb: '',
-          mianji: '',
-          concatPeople: '',
-          peitao: '',
-          phone: '',
-          fuwu: '',
-          youshi: '',
-          tiaojian: ''
+          description: ''
         },
         rules: {
           title: [
@@ -109,9 +90,6 @@
           ]
         }
       }
-    },
-    components: {
-      tinymce
     },
     methods: {
       beforeAvatarUpload(file) {
@@ -127,18 +105,22 @@
       },
       handleAvatarSuccess(res, file) {
         if (res.code == 'success') {
-          this.formData.thumb = '/' + res.data.url
+          this.formData.thumb = "/" + res.data.url
         } else {
           this.$message.error('图片上传失败！');
+        }
+      },
+      handleSuccess(res, file) {
+        if (res.code == 'success') {
+          this.formData.video = this.baseHost + '/' + res.data.url
+        } else {
+          this.$message.error('视频上传失败！');
         }
       },
       goBack() {
         window.history.go(-1)
       },
       submit() {
-        // this.formData.fuwu = this.$refs.ue1.getUEContent();
-        // this.formData.youshi = this.$refs.ue2.getUEContent();
-        // this.formData.tiaojian = this.$refs.ue3.getUEContent();
         this.formData.categoryId = this.$route.params.categoryId;
 
         var isPass = false
@@ -168,6 +150,9 @@
           })
         }
       }
+    },
+    components: {
+      Tinymce
     },
     created() {
       if (this.$route.params.id) {

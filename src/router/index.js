@@ -8,6 +8,7 @@ import Role from '@/pages/Role'
 import Admin from '@/pages/Admin'
 import AdminRole from '@/pages/AdminRole'
 import News from '@/pages/News'
+import Curriculum from '@/pages/Curriculum'
 import Video from '@/pages/Video'
 import Category from '@/pages/Category'
 import CategoryList from '@/pages/CategoryList'
@@ -98,6 +99,16 @@ export default new Router({
           path: 'news/:categoryId/:id',
           name: 'newsEdit',
           component: News
+        },
+        {
+          path: 'curriculum/:categoryId',
+          name: 'curriculum',
+          component: Curriculum
+        },
+        {
+          path: 'curriculum/:categoryId/:id',
+          name: 'curriculumEdit',
+          component: Curriculum
         },
         {
           path: 'video/:categoryId',
@@ -250,7 +261,7 @@ export default new Router({
           path: 'position/:id',
           name: 'positionContent',
           component: PositionContent
-        },
+        }
       ]
     }
   ]

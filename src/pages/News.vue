@@ -29,7 +29,7 @@
 </style>
 <template>
   <section class="news_page">
-    <el-form ref="form" :model="formData" :rules="rules" label-width="80px" style="width: 500px;">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="80px" size="mini">
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" size="mini"></el-input>
       </el-form-item>
@@ -42,20 +42,21 @@
       <el-form-item label="来源" prop="origin">
         <el-input v-model="formData.origin" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="图片" prop="thumb">
-        <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
-                   :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.thumb" :src="baseHost + formData.thumb" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+      <!--<el-form-item label="图片" prop="thumb">-->
+        <!--<el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"-->
+                   <!--:on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">-->
+          <!--<img v-if="formData.thumb" :src="baseHost + formData.thumb" class="avatar">-->
+          <!--<i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
+        <!--</el-upload>-->
+      <!--</el-form-item>-->
+      <el-form-item label="内容">
+        <tinymce :height="300" ref="tinymce" v-model="formData.content"></tinymce>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" style="margin-top: 10px;" @click="submit">提交</el-button>
+        <el-button type="warning" style="margin-top: 10px;" @click="goBack">取消</el-button>
       </el-form-item>
     </el-form>
-    <div style="width: 80px; text-align: right; font-size: 14px; color: #606266; margin: 15px 0; box-sizing: border-box; padding-right: 12px">
-      内容
-    </div>
-    <tinymce :height="300" ref="tinymce" v-model="formData.content"></tinymce>
-    <el-button type="primary" style="margin-top: 10px;" @click="submit">提交</el-button>
-    <el-button type="warning" style="margin-top: 10px;" @click="goBack">取消</el-button>
   </section>
 </template>
 <script>

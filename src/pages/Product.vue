@@ -28,9 +28,14 @@
           <el-tag :type="['danger', 'sucess'][scope.row.isShow]">{{ ['不展示', '展示'][scope.row.isShow] }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="审核状态">
+      <el-table-column prop="status" label="状态"  width="80">
         <template slot-scope="scope">
-          {{['待审核', '审核通过', '未通过'][scope.row.status]}}
+          <el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['待审核', '通过', '未通过'][scope.row.status]}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="order" label="排序(大到小)">
+        <template slot-scope="scope">
+          <input :value="scope.row.order" :idValue="scope.row.id" type="number" @change="blurHander"/>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -60,7 +65,7 @@
 </template>
 
 <script>
-  import {queryProduct, delProduct, checkProduct} from '../api/product'
+  import {queryProduct, delProduct, checkProduct, updateProduct} from '../api/product'
   import dateFormat from '../util/dateFormat'
   export default {
     name: 'admmin_page',
@@ -85,6 +90,23 @@
       }
     },
     methods : {
+      blurHander(e){
+        const order = parseInt(e.target.value);
+        if(!(order >= 0)){
+          return false;
+        }
+        updateProduct({
+          id: parseInt(e.target.getAttribute('idValue')),
+          order: order
+        }).then(e => {
+          this.$message({
+            message: '排序更新成功',
+            type: 'success'
+          });
+        }).catch(e => {
+          this.getRows()
+        })
+      },
       sizeChange(e) {
         this.pageInfo.pageSize = e
         this.pageInfo.currentPage = 1

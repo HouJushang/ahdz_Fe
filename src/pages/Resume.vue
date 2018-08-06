@@ -30,6 +30,11 @@
           {{['待审核', '审核通过', '未通过'][scope.row.status]}}
         </template>
       </el-table-column>
+      <el-table-column prop="order" label="排序(大到小)">
+        <template slot-scope="scope">
+          <input :value="scope.row.order" :idValue="scope.row.id" type="number" @change="blurHander"/>
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope" width="200">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="edit(scope.row)"></el-button>
@@ -48,7 +53,7 @@
 </template>
 
 <script>
-  import {queryResume, delResume} from '../api/resume'
+  import {queryResume, delResume, updateResume} from '../api/resume'
   import dateFormat from '../util/dateFormat'
 
   export default {
@@ -69,6 +74,24 @@
       }
     },
     methods: {
+      blurHander(e){
+        const order = parseInt(e.target.value);
+        if(!(order >= 0)){
+          return false;
+        }
+        updateResume({
+          id: parseInt(e.target.getAttribute('idValue')),
+          order: order
+        }).then(e => {
+          this.$message({
+            message: '排序更新成功',
+            type: 'success'
+          });
+          this.getRows()
+        }).catch(e => {
+          console.log(e)
+        })
+      },
       sizeChange(e) {
         this.pageInfo.pageSize = e
         this.pageInfo.currentPage = 1

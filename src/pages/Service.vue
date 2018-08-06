@@ -21,30 +21,35 @@
       </el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
       <el-table-column prop="company.companyName" label="公司名称"></el-table-column>
-      <el-table-column prop="fanshi" label="服务方式"></el-table-column>
-      <el-table-column prop="duixiang" label="服务对象"></el-table-column>
+      <!--<el-table-column prop="fanshi" label="服务方式"></el-table-column>-->
+      <!--<el-table-column prop="duixiang" label="服务对象"></el-table-column>-->
       <el-table-column prop="leibie" label="类别"></el-table-column>
       <el-table-column label="是否展示">
         <template slot-scope="scope">
           <el-tag :type="['danger', 'sucess'][scope.row.isShow]">{{ ['不展示', '展示'][scope.row.isShow] }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="审核状态">
-        <template slot-scope="scope">
-          {{['待审核', '审核通过', '未通过'][scope.row.status]}}
-        </template>
-      </el-table-column>
-      <!--<el-table-column prop="status" label="状态"  width="80">-->
+      <!--<el-table-column label="审核状态">-->
         <!--<template slot-scope="scope">-->
-          <!--<el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['待审核', '通过', '未通过'][scope.row.status]}}</el-tag>-->
+          <!--{{['待审核', '审核通过', '未通过'][scope.row.status]}}-->
         <!--</template>-->
       <!--</el-table-column>-->
+      <el-table-column prop="status" label="状态"  width="80">
+        <template slot-scope="scope">
+          <el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['待审核', '通过', '未通过'][scope.row.status]}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="order" label="排序(大到小)">
+        <template slot-scope="scope">
+          <input :value="scope.row.order" :idValue="scope.row.id" type="number" @change="blurHander"/>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit"  size="mini" @click="edit(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete"  size="mini" @click="showDel(scope.row)"></el-button>
           <el-button type="warning" size="mini" icon="el-icon-setting"  @click="check(scope.row)"></el-button>
-          <!--<el-button type="primary" size="mini" icon="el-icon-star-off"  @click="position(scope.row)"></el-button>-->
+          <el-button type="primary" size="mini" icon="el-icon-star-off"  @click="position(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -76,7 +81,7 @@
 </template>
 
 <script>
-  import {queryService, delService, checkService} from '../api/service'
+  import {queryService, delService, checkService, updateService} from '../api/service'
   import {addPositionContent, queryPositionContent} from '../api/positionContent'
   import {queryPosition} from '../api/position'
 
@@ -110,6 +115,23 @@
       }
     },
     methods : {
+      blurHander(e){
+        const order = parseInt(e.target.value);
+        if(!(order >= 0)){
+          return false;
+        }
+        updateService({
+          id: parseInt(e.target.getAttribute('idValue')),
+          order: order
+        }).then(e => {
+          this.$message({
+            message: '排序更新成功',
+            type: 'success'
+          });
+        }).catch(e => {
+          this.getRows()
+        })
+      },
       sizeChange(e) {
         this.pageInfo.pageSize = e
         this.pageInfo.currentPage = 1

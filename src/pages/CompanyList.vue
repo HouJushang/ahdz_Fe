@@ -1,5 +1,6 @@
 <style lang="sass">
   .admmin_page
+    overflow: hidden
     .admmin_page_top
       height: 50px
       display: flex
@@ -43,6 +44,12 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination style="float: right; margin: 20px 0 10px 0;"
+                   background page-sizes :page-sizes="[10, 20, 50, 100]" :page-size="this.pageInfo.pageSize"
+                   layout="total, sizes, prev, pager, next"
+                   @size-change="sizeChange" @current-change="currentChange"
+                   :total="listData.count">
+    </el-pagination>
     <el-dialog title="选择推荐位" :visible.sync="positionData.show" width="40%">
       <el-checkbox-group v-model="positionData.choose">
         <el-checkbox v-for="item in positionData.data" :label="item.id" style="margin-left: 10px;">{{item.title}}</el-checkbox>

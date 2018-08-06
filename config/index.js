@@ -37,11 +37,13 @@ module.exports = {
   },
 
   build: {
-    // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
-
-    // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    // // Template for index.html
+    // index: path.resolve(__dirname, '../dist/index.html'),
+    //
+    // // Paths
+    // assetsRoot: path.resolve(__dirname, '../dist'),
+    index: path.resolve('/Users/houjushang/code/mycode/node/ahdz_Node/public/ahAdmin/index.html'),
+    assetsRoot: path.resolve('/Users/houjushang/code/mycode/node/ahdz_Node/public/ahAdmin'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/ahAdmin/',
 

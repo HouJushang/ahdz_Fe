@@ -29,6 +29,11 @@
           {{['待审核', '审核通过', '未通过'][scope.row.status]}}
         </template>
       </el-table-column>
+      <el-table-column prop="order" label="排序(大到小)">
+        <template slot-scope="scope">
+          <input :value="scope.row.order" :idValue="scope.row.id" type="number" @change="blurHander"/>
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-tag :type="['danger', 'sucess'][scope.row.isShow]">{{ ['不展示', '展示'][scope.row.isShow] }}</el-tag>
@@ -61,7 +66,7 @@
 </template>
 
 <script>
-  import {queryJob, delJob, checkJob} from '../api/job'
+  import {queryJob, delJob, checkJob, updateJob} from '../api/job'
   import dateFormat from '../util/dateFormat'
   export default {
     name: 'admmin_page',
@@ -86,6 +91,23 @@
       }
     },
     methods : {
+      blurHander(e){
+        const order = parseInt(e.target.value);
+        if(!(order >= 0)){
+          return false;
+        }
+        updateJob({
+          id: parseInt(e.target.getAttribute('idValue')),
+          order: order
+        }).then(e => {
+          this.$message({
+            message: '排序更新成功',
+            type: 'success'
+          });
+        }).catch(e => {
+          this.getRows()
+        })
+      },
       sizeChange(e) {
         this.pageInfo.pageSize = e
         this.pageInfo.currentPage = 1

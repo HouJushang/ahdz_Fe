@@ -46,6 +46,9 @@
         <el-form-item label="模型" prop="model">
           <el-input v-model="formData.model" size="mini"></el-input>
         </el-form-item>
+        <el-form-item label="栏目ID" prop="categoryId">
+          <el-input v-model="formData.categoryId" size="mini"></el-input>
+        </el-form-item>
         <el-button type="primary" @click="submit">{{['添加', '修改'][dialogType]}}</el-button>
       </el-form>
     </el-dialog>

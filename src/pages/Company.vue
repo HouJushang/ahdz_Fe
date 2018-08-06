@@ -40,6 +40,9 @@
       <el-form-item label="企业名称" prop="companyName">
         <el-input v-model="formData.companyName" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="企业描述" prop="description">
+        <el-input type="textarea" rows="5" v-model="formData.description" size="mini"></el-input>
+      </el-form-item>
       <el-form-item label="组织机构代码或工商注册号" prop="zzjgdm">
         <el-input v-model="formData.zzjgdm" size="mini"></el-input>
       </el-form-item>

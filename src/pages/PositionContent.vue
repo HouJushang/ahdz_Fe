@@ -19,7 +19,7 @@
       <el-table-column prop="companyName" label="公司"></el-table-column>
       <el-table-column prop="order" label="排序(大到小)">
         <template slot-scope="scope">
-          <input :value="scope.row.order" :idValue="scope.row.id" type="number" @blur="blurHander"/>
+          <input :value="scope.row.order" :idValue="scope.row.id" type="number" @change="blurHander"/>
         </template>
       </el-table-column>
       <el-table-column prop="model" label="模型"></el-table-column>
