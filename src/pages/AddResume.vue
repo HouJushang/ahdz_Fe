@@ -9,6 +9,7 @@
 <template>
   <section>
     <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
+      <h2>基本信息</h2>
       <el-form-item label="姓名" prop="name">
         <el-input v-model="formData.name" size="mini"></el-input>
       </el-form-item>
@@ -45,7 +46,7 @@
       <el-form-item label="专业" prop="zhuanye">
         <el-input v-model="formData.zhuanye" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="工作经验" prop="jiangyan">
+      <el-form-item label="工作年限" prop="jiangyan">
         <el-input v-model="formData.jiangyan" size="mini"></el-input>
       </el-form-item>
       <el-form-item label="电话" prop="phone">
@@ -55,15 +56,17 @@
         <el-input v-model="formData.email" size="mini"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="zhuangtai">
-        <el-input v-model="formData.zhuangtai" placeholder="在职还是正在找工作" size="mini"></el-input>
+        <el-select v-model="formData.zhuangtai"  placeholder="在职还是正在找工作" size="mini">
+          <el-option label="目前正在找工作" value="目前正在找工作"></el-option>
+          <el-option label="在职观望好机会" value="在职观望好机会"></el-option>
+        </el-select>
+        <!--<el-input v-model="formData.zhuangtai" placeholder="在职还是正在找工作" size="mini"></el-input>-->
       </el-form-item>
       <el-form-item label="通讯地址" prop="address">
         <el-input v-model="formData.address" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="是否显示" prop=isShow>
-        <el-radio v-model="formData.isShow" :label="0">停用</el-radio>
-        <el-radio v-model="formData.isShow" :label="1">显示</el-radio>
-      </el-form-item>
+
+      <h2>求职意向</h2>
       <el-form-item label="薪资" prop="xinzi">
         <el-input v-model="formData.xinzi" size="mini"></el-input>
       </el-form-item>
@@ -74,29 +77,31 @@
         <el-input v-model="formData.zhiwei" size="mini"></el-input>
       </el-form-item>
       <el-form-item label="到岗时间" prop="shijian">
-        <el-input v-model="formData.shijian" size="mini"></el-input>
+        <el-select v-model="formData.shijian"  placeholder="到岗时间" size="mini">
+          <el-option label="无法确定" value="无法确定"></el-option>
+          <el-option label="随时到岗" value="随时到岗"></el-option>
+          <el-option label="一周" value="一周"></el-option>
+          <el-option label="两周" value="两周"></el-option>
+          <el-option label="三周" value="三周"></el-option>
+          <el-option label="三周" value="三周"></el-option>
+          <el-option label="一个月" value="一个月"></el-option>
+          <el-option label="两个月" value="两个月"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="工作类型" prop="leixing">
-        <el-input v-model="formData.leixing" size="mini"></el-input>
+        <el-select v-model="formData.leixing"  placeholder="工作类型" size="mini">
+          <el-option label="全职" value="全职"></el-option>
+          <el-option label="兼职" value="兼职"></el-option>
+          <el-option label="实习" value="实习"></el-option>
+          <el-option label="不限" value="不限"></el-option>
+        </el-select>
+        <!--<el-input v-model="formData.leixing" size="mini"></el-input>-->
       </el-form-item>
       <el-form-item label="行业" prop="hangye">
         <el-input v-model="formData.hangye" size="mini"></el-input>
       </el-form-item>
-      <div v-for="(item, index) in formData.gongzuo">
-        <span class="formTile">工作经验 - {{index + 1}} </span><el-button type="danger" size="mini" @click="formData.gongzuo.splice(index, 1)">删除</el-button>
-        <el-form-item label="时间">
-          <el-input v-model="item.startTime" size="mini" style="width: 120px"></el-input> -
-          <el-input v-model="item.endTime" size="mini" style="width: 120px"></el-input>
-        </el-form-item>
-        <el-form-item label="公司" prop="companyName">
-          <el-input v-model="item.companyName" size="mini"></el-input>
-        </el-form-item>
-        <el-form-item label="岗位" prop="gangwei">
-          <el-input v-model="item.gangwei" size="mini"></el-input>
-        </el-form-item>
-      </div>
-      <el-button style="margin-left: 80px; margin: 12px 0;" size="mini" type="success" @click="formData.gongzuo.push({})">添加工作经验</el-button>
 
+      <h2>教育经历</h2>
       <div v-for="(item, index) in formData.jiaoyu">
         <span class="formTile">教育经历 - {{index + 1}} </span><el-button type="danger" size="mini" @click="formData.jiaoyu.splice(index, 1)">删除</el-button>
         <el-form-item label="时间">
@@ -115,6 +120,25 @@
       </div>
       <el-button style="margin-left: 80px; margin: 12px 0;" size="mini" type="success" @click="formData.jiaoyu.push({})">添加教育经历</el-button>
 
+
+      <h2>工作经历</h2>
+      <div v-for="(item, index) in formData.gongzuo">
+        <span class="formTile">工作经验 - {{index + 1}} </span><el-button type="danger" size="mini" @click="formData.gongzuo.splice(index, 1)">删除</el-button>
+        <el-form-item label="时间">
+          <el-input v-model="item.startTime" size="mini" style="width: 120px"></el-input> -
+          <el-input v-model="item.endTime" size="mini" style="width: 120px"></el-input>
+        </el-form-item>
+        <el-form-item label="公司" prop="companyName">
+          <el-input v-model="item.companyName" size="mini"></el-input>
+        </el-form-item>
+        <el-form-item label="岗位" prop="gangwei">
+          <el-input v-model="item.gangwei" size="mini"></el-input>
+        </el-form-item>
+      </div>
+      <el-button style="margin-left: 80px; margin: 12px 0;" size="mini" type="success" @click="formData.gongzuo.push({})">添加工作经验</el-button>
+
+
+      <h2>培训经历</h2>
       <div v-for="(item, index) in formData.peixun">
         <span class="formTile">培训经历 - {{index + 1}} </span><el-button type="danger" size="mini" @click="formData.peixun.splice(index, 1)">删除</el-button>
         <el-form-item label="时间">
@@ -132,13 +156,19 @@
         </el-form-item>
       </div>
       <el-button style="margin-left: 80px; margin: 12px 0;" size="mini" type="success" @click="formData.peixun.push({})">添加培训经历</el-button>
+
+      <h2>其他选项</h2>
+      <el-form-item label="是否显示" prop=isShow>
+        <el-radio v-model="formData.isShow" :label="0">停用</el-radio>
+        <el-radio v-model="formData.isShow" :label="1">显示</el-radio>
+      </el-form-item>
     </el-form>
-    <el-button style="margin-left: 80px; margin-top: 12px;" type="primary" @click="submit">提交</el-button>
+    <el-button style="margin-left: 80px; margin-top: 12px;" type="primary" size="mini" @click="submit">提交</el-button>
   </section>
 </template>
 <script>
   import {baseUrl,baseHost} from '../config'
-  import {queryOneResume, addResume, updateResume} from "../api/resume"
+  import {queryOneResume, addResume, updateResumeAll} from "../api/resume"
 
   export default {
     name: 'news_page',
@@ -201,7 +231,7 @@
         }
 
         if (this.$route.params.id) {
-          updateResume(this.formData).then(e => {
+          updateResumeAll(this.formData).then(e => {
             this.$router.push({name: 'resume'})
           }).catch(e => {
             this.$message.error(e);

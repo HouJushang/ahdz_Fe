@@ -14,10 +14,14 @@ function addResume(data){
 function updateResume(data){
   return putApi(`admin/resume`, data)
 }
+function updateResumeAll(data){
+  return putApi(`admin/resumeAll`, data)
+}
 export {
   queryResume,
   queryOneResume,
   delResume,
   addResume,
-  updateResume
+  updateResume,
+  updateResumeAll
 }

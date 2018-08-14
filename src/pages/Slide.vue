@@ -21,7 +21,7 @@
 </style>
 <template>
   <section class="news_page">
-    <el-form ref="form" :model="formData" :rules="rules" label-width="80px" style="width: 400px">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="80px" style="width: 450px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" size="mini"></el-input>
       </el-form-item>
@@ -33,11 +33,13 @@
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="formData.image" :src="formData.image" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <div slot="tip" class="el-upload__tip" v-if="$route.params.categoryId == 19">只能上传jpg/png/gif等图片文件，推荐上传90*90px比例的图片</div>
+          <div slot="tip" class="el-upload__tip" v-else>只能上传jpg/png/gif等图片文件，推荐上传500*300px比例的图片</div>
         </el-upload>
       </el-form-item>
     </el-form>
-    <el-button type="primary" @click="submit">提交</el-button>
-    <el-button type="warning" @click="goBack">取消</el-button>
+    <el-button type="primary" @click="submit" size="mini">提交</el-button>
+    <el-button type="warning" @click="goBack" size="mini">取消</el-button>
 
   </section>
 </template>

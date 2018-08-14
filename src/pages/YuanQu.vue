@@ -53,6 +53,7 @@
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="formData.thumb" :src="baseHost + formData.thumb" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png/gif等图片文件，推荐上传300*220px比例的图片</div>
         </el-upload>
       </el-form-item>
       <el-form-item label="园区服务">

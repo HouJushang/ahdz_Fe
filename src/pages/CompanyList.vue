@@ -35,7 +35,14 @@
       <el-table-column prop="id" label="公司ID"></el-table-column>
       <el-table-column prop="user.phone" label="手机号"></el-table-column>
       <el-table-column prop="companyName" label="公司名称"></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="推荐位">
+        <template slot-scope="scope">
+          <span v-for="item in listPosition[scope.$index]">
+            {{item.title}},
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="380" align="center">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditForm(scope.row.user)">基本信息</el-button>
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="goDetail(scope.row)">扩展信息</el-button>
@@ -64,7 +71,7 @@
 
 <script>
   import {queryUser, delUser2, addUser, updateUser} from '../api/user'
-  import {addPositionContent, queryPositionContent} from '../api/positionContent'
+  import {addPositionContent, queryPositionContent, positionDetail} from '../api/positionContent'
   import {queryPosition} from '../api/position'
   import {queryCompanyList} from '../api/company'
   export default {
@@ -77,6 +84,7 @@
           count: 0,
           rows: []
         },
+        listPosition: [],
         formData: {
           phone: '',
           password: '',
@@ -192,7 +200,14 @@
             currentPage: this.pageInfo.currentPage
           }
         }).then(e => {
-          this.listData = e;
+          var promiseArr = []
+          e.rows.forEach(f => {
+            promiseArr.push(positionDetail(f.id))
+          })
+          Promise.all(promiseArr).then(g => {
+            this.listData = e
+            this.listPosition = g
+          })
         })
       },
       getPostion() {

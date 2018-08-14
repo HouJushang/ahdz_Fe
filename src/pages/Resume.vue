@@ -14,6 +14,29 @@
       <p>简历管理</p>
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="goAdd">添加简历</el-button>
     </div>
+    <el-form :inline="true"  size="mini" class="demo-form-inline">
+      <!--<el-form-item label="标题">-->
+      <!--<el-input v-model="filter.title"  />-->
+      <!--</el-form-item>-->
+      <el-form-item label="状态">
+        <el-select v-model="filter.status" placeholder="请选择">
+          <el-option label="全部" value=""></el-option>
+          <el-option label="待审核" value="0"></el-option>
+          <el-option label="通过" value="1"></el-option>
+          <el-option label="未通过" value="2"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="是否展示">
+        <el-select v-model="filter.isShow" placeholder="请选择">
+          <el-option label="全部" value=""></el-option>
+          <el-option label="不展示" value="0"></el-option>
+          <el-option label="展示" value="1"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+      </el-form-item>
+    </el-form>
     <el-table :data="listData.rows" border style="width: 100%" size="mini">
       <el-table-column
         type="index"
@@ -25,11 +48,11 @@
           <el-tag :type="['danger', 'sucess'][scope.row.isShow]">{{ ['停用', '展示'][scope.row.isShow] }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="审核状态">
-        <template slot-scope="scope">
-          {{['待审核', '审核通过', '未通过'][scope.row.status]}}
-        </template>
-      </el-table-column>
+      <!--<el-table-column label="审核状态">-->
+        <!--<template slot-scope="scope">-->
+          <!--{{['待审核', '审核通过', '未通过'][scope.row.status]}}-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column prop="order" label="排序(大到小)">
         <template slot-scope="scope">
           <input :value="scope.row.order" :idValue="scope.row.id" type="number" @change="blurHander"/>
@@ -55,6 +78,7 @@
 <script>
   import {queryResume, delResume, updateResume} from '../api/resume'
   import dateFormat from '../util/dateFormat'
+  import { filter } from '../util/objectUtil'
 
   export default {
     name: 'resume_page',
@@ -65,6 +89,11 @@
         listData: {
           count: 0,
           rows: []
+        },
+        filter:{
+          status: "",
+          isShow: "",
+          title: ""
         },
         pageInfo: {
           currentPage: 1,
@@ -121,12 +150,17 @@
           this.getRows()
         })
       },
+      onSubmit() {
+        this.pageInfo.currentPage = 1;
+        this.getRows()
+      },
       getRows() {
         queryResume({
           pageInfo: {
             pageSize: this.pageInfo.pageSize,
             currentPage: this.pageInfo.currentPage
-          }
+          },
+          filter: filter(this.filter)
         }).then(e => {
           this.listData = e;
         })

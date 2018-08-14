@@ -47,15 +47,17 @@
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="formData.thumb" :src="baseHost + formData.thumb" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png/gif等图片文件，推荐上传297*223px比例的图片</div>
         </el-upload>
       </el-form-item>
       <el-form-item label="视频" prop="origin">
-        <el-upload class="upload-demo" :action="baseUrl + 'upload'" :on-success="handleSuccess" multiple :limit="1">
+        <el-upload class="upload-demo" :before-upload="beforeVideoUpload" action="http://upload-z2.qiniup.com" :on-success="handleSuccess" multiple :limit="1" :data="postData">
           <el-button size="mini" type="primary">点击上传</el-button>
         </el-upload>
+        {{ formData.video }}
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" style="margin-top: 10px;" @click="submit">提交</el-button>
+        <el-button type="primary" style="margin-top: 10px;" @click="submit" :disabled="videoLoading">提交</el-button>
         <el-button type="warning" style="margin-top: 10px;" @click="goBack">取消</el-button>
       </el-form-item>
     </el-form>
@@ -63,7 +65,8 @@
 </template>
 <script>
   import Tinymce from '../components/Tinymce/'
-  import {baseUrl, baseHost} from '../config'
+  import {baseUrl, baseHost, uploadUrl} from '../config'
+  import uploadKey from '../api/uploadKey'
   import {queryOneContent, addContent, updateContent} from "../api/content"
 
   export default {
@@ -72,9 +75,14 @@
       return {
         baseUrl,
         baseHost,
+        uploadUrl,
         config: {
           initialFrameWidth: null,
           initialFrameHeight: 400
+        },
+        videoLoading: false,
+        postData: {
+          token: ''
         },
         formData: {
           title: '',
@@ -110,12 +118,18 @@
           this.$message.error('图片上传失败！');
         }
       },
+      beforeVideoUpload() {
+        this.videoLoading = true
+      },
       handleSuccess(res, file) {
-        if (res.code == 'success') {
-          this.formData.video = this.baseHost + '/' + res.data.url
+        console.log(this.uploadUrl)
+        if (res.key) {
+          this.formData.video = this.uploadUrl + '/' + res.key
+          this.$message.success('视频上传成功！');
         } else {
           this.$message.error('视频上传失败！');
         }
+        this.videoLoading = false
       },
       goBack() {
         window.history.go(-1)
@@ -163,6 +177,9 @@
           this.formData = e;
         })
       }
+       uploadKey().then(e => {
+         this.postData.token = e
+       })
     }
   }
 </script>

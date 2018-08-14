@@ -33,6 +33,9 @@
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="摘要" prop="description">
+        <el-input type="textarea" :rows="4" v-model="formData.description" size="mini"></el-input>
+      </el-form-item>
       <el-form-item label="地址" prop="address">
         <el-input v-model="formData.address" size="mini"></el-input>
       </el-form-item>
@@ -56,6 +59,7 @@
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="formData.thumb" :src="formData.thumb" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <div slot="tip" class="el-upload__tip" v-if="">只能上传jpg/png/gif等图片文件，推荐上传340*250px比例的图片</div>
         </el-upload>
       </el-form-item>
     </el-form>
