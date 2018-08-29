@@ -72,7 +72,7 @@
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit"  size="mini" @click="edit(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete"  size="mini" @click="showDel(scope.row)"></el-button>
-          <el-button type="warning" size="mini" icon="el-icon-setting"  @click="check(scope.row)"></el-button>
+          <el-button type="warning" v-if="rolename == '审核员'" size="mini" icon="el-icon-setting"  @click="check(scope.row)"></el-button>
           <!--<el-button type="primary" size="mini" icon="el-icon-star-off"  @click="position(scope.row)"></el-button>-->
         </template>
       </el-table-column>
@@ -115,6 +115,7 @@
     name: 'admmin_page',
     data () {
       return {
+        rolename: localStorage.getItem('rolename'),
         dateFormat,
         formData: {},
         listData: {

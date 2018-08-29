@@ -42,8 +42,8 @@ module.exports = {
     //
     // // Paths
     // assetsRoot: path.resolve(__dirname, '../dist'),
-    index: path.resolve('/Users/houjushang/code/mycode/node/ahdz_Node/public/admin.html'),
-    assetsRoot: path.resolve('/Users/houjushang/code/mycode/node/ahdz_Node/public/'),
+    index: path.resolve('/Users/jushanghou/code/node/ahdz_node/public/admin.html'),
+    assetsRoot: path.resolve('/Users/jushanghou/code/node/ahdz_node/public/'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 

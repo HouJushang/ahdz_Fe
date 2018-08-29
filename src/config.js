@@ -7,9 +7,8 @@ if(process.env.NODE_ENV == 'development'){
   uploadUrl = "http://upload.anhuiec.com";
 }
 if(process.env.NODE_ENV == 'production'){
-  baseUrl = 'http://www.anhuiec.com/';
-  baseHost = "http://www.anhuiec.com";
-  // uploadUrl = "http://upload.anhuiec.com";
+  baseUrl = '/';
+  baseHost = "";
   uploadUrl = "http://upload.anhuiec.com";
 }
 export {

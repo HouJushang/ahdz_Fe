@@ -48,6 +48,7 @@
             <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
               <img v-if="formData.avatar" :src="baseHost + formData.avatar" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <div slot="tip" class="el-upload__tip">建议上传100 * 100px的图片</div>
             </el-upload>
           </el-form-item>
       </div>

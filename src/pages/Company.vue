@@ -35,6 +35,7 @@
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="formData.logo" :src="baseHost + formData.logo" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <div slot="tip" class="el-upload__tip">建议上传图片尺寸为340*250px</div>
         </el-upload>
       </el-form-item>
       <el-form-item label="企业名称" prop="companyName">

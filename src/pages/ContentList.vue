@@ -88,8 +88,8 @@
           <el-button type="danger" icon="el-icon-delete"  size="mini" @click="del(scope.row)"></el-button>
           <el-button type="warning" size="mini" icon="el-icon-view"  @click="check(scope.row)"></el-button>
           <el-button type="primary" size="mini" icon="el-icon-star-off" v-if="positionData.data.length > 0"  @click="position(scope.row)"></el-button>
-          <el-button type="warning" size="mini" icon="el-icon-success" v-if="scope.row.check == 2 || scope.row.check == 0"  @click="shenhe(scope.row, 1)"></el-button>
-          <el-button type="warning" size="mini" icon="el-icon-error" v-if="scope.row.check == 1 || scope.row.check == 0" @click="shenhe(scope.row, 2)"></el-button>
+          <el-button type="success" size="mini" icon="el-icon-success" v-if="(scope.row.check == 2 || scope.row.check == 0) && rolename == '审核员'"  @click="shenhe(scope.row, 1)"></el-button>
+          <el-button type="warning" size="mini" icon="el-icon-error" v-if="(scope.row.check == 1 || scope.row.check == 0) && rolename == '审核员'" @click="shenhe(scope.row, 2)"></el-button>
         </template>
       </el-table-column>
     </el-table>
