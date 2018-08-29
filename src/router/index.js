@@ -34,6 +34,7 @@ import CompanyList from '@/pages/CompanyList'
 import PositionContent from '@/pages/PositionContent'
 import PositionList from '@/pages/PositionList'
 import RoleMenu from '@/pages/RoleMenu'
+import Accessory from '@/pages/Accessory'
 
 Vue.use(Router)
 
@@ -267,6 +268,11 @@ export default new Router({
           path: 'positionlist',
           name: 'positionlist',
           component: PositionList
+        },
+        {
+          path: 'accessory',
+          name: 'accessory',
+          component: Accessory
         },
       ]
     }

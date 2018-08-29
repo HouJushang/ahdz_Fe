@@ -42,10 +42,10 @@ module.exports = {
     //
     // // Paths
     // assetsRoot: path.resolve(__dirname, '../dist'),
-    index: path.resolve('/Users/houjushang/code/mycode/node/ahdz_Node/public/ahAdmin/index.html'),
-    assetsRoot: path.resolve('/Users/houjushang/code/mycode/node/ahdz_Node/public/ahAdmin'),
+    index: path.resolve('/Users/houjushang/code/mycode/node/ahdz_Node/public/admin.html'),
+    assetsRoot: path.resolve('/Users/houjushang/code/mycode/node/ahdz_Node/public/'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/ahAdmin/',
+    assetsPublicPath: '/',
 
     /**
      * Source Maps

@@ -13,6 +13,18 @@
     <div class="position_page_top">
       <p>推荐位内容</p>
     </div>
+    <el-form :inline="true" :model="filterForm" ref="filterForm" class="demo-form-inline" size="mini">
+      <el-form-item label="标题" v-if="this.$route.params.id == 1">
+        <el-input v-model="filterForm.title" placeholder="请输入标题"></el-input>
+      </el-form-item>
+      <el-form-item label="公司名称" v-else>
+        <el-input v-model="filterForm.companyName" placeholder="请输入公司名称"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="success" @click="onClear">清空</el-button>
+      </el-form-item>
+    </el-form>
     <el-table :data="rows" border style="width: 100%" size="mini">
       <el-table-column type="index" width="50"></el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
@@ -45,6 +57,12 @@
         dialogType: 0,
         formData: {},
         rows: [],
+        filterForm: {
+          title: '',
+          companyName: ''
+        },
+        filterFormCopy: {},
+        filterFormCopyEmpty: {},
         rules: {
           title: [
             {required: true, message: '请输入标题', trigger: 'blur'},
@@ -57,7 +75,7 @@
     },
     methods :{
       getRows() {
-        queryPositionContent(this.$route.params.id).then(e => {
+        queryPositionContent(this.$route.params.id, this.filterFormCopy).then(e => {
           this.rows = e;
         })
       },
@@ -76,6 +94,15 @@
         }).cache(e => {
           this.$message.error(e)
         })
+      },
+      onSubmit() {
+        Object.assign(this.filterFormCopy, this.filterForm)
+        this.getRows()
+      },
+      onClear() {
+        Object.assign(this.filterFormCopy, this.filterFormCopyEmpty)
+        Object.assign(this.filterForm, this.filterFormCopyEmpty)
+        this.getRows()
       },
       blurHander(e){
         const order = parseInt(e.target.value);
@@ -96,6 +123,8 @@
       }
     },
     created() {
+      Object.assign(this.filterFormCopy, this.filterForm)
+      Object.assign(this.filterFormCopyEmpty, this.filterForm)
         this.getRows();
     }
   }

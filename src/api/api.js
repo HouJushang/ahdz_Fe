@@ -26,11 +26,12 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject('网络错误');
 })
 
-const getApi = function (url, data) {
+const getApi = function (url, data, other) {
   url = baseUrl + url
   return axios.get(url, {
     params: data,
-    withCredentials: true
+    withCredentials: true,
+    ...other
   })
 }
 const delApi = function (url, data) {

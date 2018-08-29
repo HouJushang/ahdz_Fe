@@ -15,6 +15,18 @@
       <p>个人列表</p>
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="showAddForm">添加用户</el-button>
     </div>
+    <el-form :inline="true" :model="filterForm" ref="filterForm" class="demo-form-inline" size="mini">
+      <el-form-item label="手机号码">
+        <el-input v-model="filterForm.phone" placeholder="请输入手机号码"></el-input>
+      </el-form-item>
+      <el-form-item label="姓名">
+        <el-input v-model="filterForm.name" placeholder="请输入姓名"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="success" @click="onClear">清空</el-button>
+      </el-form-item>
+    </el-form>
     <el-dialog :title="['添加','编辑'][dialogType]" :visible.sync="dialogShow" width="400px">
       <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
         <el-form-item label="手机号" prop="phone">
@@ -54,6 +66,7 @@
 <script>
   import {queryUser, delUser, addUser, updateUser} from '../api/user'
   import {getPersonList} from '../api/person'
+
   export default {
     name: 'user_page',
     data () {
@@ -69,12 +82,16 @@
           pageSize: 10,
           total: 0,
         },
+        filterForm: {
+          phone: '',
+          name: ''
+        },
+        filterFormCopy: {},
+        filterFormCopyEmpty: {},
         formData: {
           phone: '',
           password: '',
           type: 0
-        },
-        filter: {
         },
         rules: {
           phone: [
@@ -144,6 +161,15 @@
           console.log('取消删除')
         });
       },
+      onSubmit() {
+        Object.assign(this.filterFormCopy, this.filterForm)
+        this.getRows()
+      },
+      onClear() {
+        Object.assign(this.filterFormCopy, this.filterFormCopyEmpty)
+        Object.assign(this.filterForm, this.filterFormCopyEmpty)
+        this.getRows()
+      },
       del(row) {
         this.$confirm(`此操作将永久删除《${row.user.phone}》, 是否继续?`, '提示', {
           confirmButtonText: '确定',
@@ -166,17 +192,20 @@
         this.$router.push({name: 'person', params: {userId: row.user.id}})
       },
       getRows() {
-        getPersonList(this.$route.params.categoryId, {
+        getPersonList({
           pageInfo: {
             pageSize: this.pageInfo.pageSize,
             currentPage: this.pageInfo.currentPage
-          }
+          },
+          filter: this.filterFormCopy
         }).then(e => {
           this.listData = e;
         })
       },
     },
     created() {
+      Object.assign(this.filterFormCopy, this.filterForm)
+      Object.assign(this.filterFormCopyEmpty, this.filterForm)
       this.getRows();
     }
   }

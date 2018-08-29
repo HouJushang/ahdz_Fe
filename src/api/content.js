@@ -14,6 +14,9 @@ function addContent(categiryId, data){
 function checkContent(categiryId, data){
   return putApi(`admin/checkContent/${categiryId}`, data)
 }
+function checkContentStatus(categiryId, data) {
+  return putApi(`admin/checkContentStatus/${categiryId}`, data)
+}
 function updateContent(categiryId, data){
   return putApi(`admin/content/${categiryId}`, data)
 }
@@ -23,5 +26,6 @@ export {
   delContent,
   addContent,
   updateContent,
-  checkContent
+  checkContent,
+  checkContentStatus
 }

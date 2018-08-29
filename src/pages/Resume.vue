@@ -15,17 +15,17 @@
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="goAdd">添加简历</el-button>
     </div>
     <el-form :inline="true"  size="mini" class="demo-form-inline">
-      <!--<el-form-item label="标题">-->
-      <!--<el-input v-model="filter.title"  />-->
-      <!--</el-form-item>-->
-      <el-form-item label="状态">
-        <el-select v-model="filter.status" placeholder="请选择">
-          <el-option label="全部" value=""></el-option>
-          <el-option label="待审核" value="0"></el-option>
-          <el-option label="通过" value="1"></el-option>
-          <el-option label="未通过" value="2"></el-option>
-        </el-select>
+      <el-form-item label="姓名">
+      <el-input v-model="filter.name"  />
       </el-form-item>
+      <!--<el-form-item label="状态">-->
+        <!--<el-select v-model="filter.status" placeholder="请选择">-->
+          <!--<el-option label="全部" value=""></el-option>-->
+          <!--<el-option label="待审核" value="0"></el-option>-->
+          <!--<el-option label="通过" value="1"></el-option>-->
+          <!--<el-option label="未通过" value="2"></el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
       <el-form-item label="是否展示">
         <el-select v-model="filter.isShow" placeholder="请选择">
           <el-option label="全部" value=""></el-option>
@@ -35,6 +35,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="success" @click="onClear">清空</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="listData.rows" border style="width: 100%" size="mini">
@@ -91,10 +92,11 @@
           rows: []
         },
         filter:{
-          status: "",
           isShow: "",
-          title: ""
+          name: ""
         },
+        filterCopy: {},
+        filterCopyEmpty: {},
         pageInfo: {
           currentPage: 1,
           pageSize: 10,
@@ -151,7 +153,14 @@
         })
       },
       onSubmit() {
+        this.pageInfo.currentPage = 1
+        Object.assign(this.filterCopy, this.filter)
+        this.getRows()
+      },
+      onClear() {
         this.pageInfo.currentPage = 1;
+        Object.assign(this.filterCopy, this.filterCopyEmpty)
+        Object.assign(this.filter, this.filterCopyEmpty)
         this.getRows()
       },
       getRows() {
@@ -160,13 +169,15 @@
             pageSize: this.pageInfo.pageSize,
             currentPage: this.pageInfo.currentPage
           },
-          filter: filter(this.filter)
+          filter: filter(this.filterCopy)
         }).then(e => {
           this.listData = e;
         })
       }
     },
     created() {
+      Object.assign(this.filterCopy, this.filter)
+      Object.assign(this.filterCopyEmpty, this.filter)
       this.getRows();
     }
   }

@@ -11,8 +11,8 @@ function addPosition(data){
 function updatePosition(data){
   return putApi('admin/position', data)
 }
-function queryPositionContent(id){
-  return getApi(`admin/positionContent/${id}`)
+function queryPositionContent(id, data){
+  return getApi(`admin/positionContent/${id}`, data)
 }
 function updatePositionContent(data){
   return putApi(`admin/positionContent`, data)

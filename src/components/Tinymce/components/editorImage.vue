@@ -49,18 +49,15 @@ export default {
       this.dialogVisible = false
     },
     handleSuccess(response, file) {
-      setTimeout(() => {
         const uid = file.uid
         const objKeyArr = Object.keys(this.listObj)
         for (let i = 0, len = objKeyArr.length; i < len; i++) {
           if (this.listObj[objKeyArr[i]].uid === uid) {
-            this.listObj[objKeyArr[i]].url = this.baseHost + '/' + response.data.url
+            this.listObj[objKeyArr[i]].url = '/' + response.data.url
             this.listObj[objKeyArr[i]].hasSuccess = true
             return
           }
         }
-      })
-
     },
     handleRemove(file) {
       const uid = file.uid

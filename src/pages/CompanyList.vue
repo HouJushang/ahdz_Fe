@@ -15,6 +15,18 @@
       <p>公司列表</p>
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="showAddForm">添加用户</el-button>
     </div>
+    <el-form :inline="true" :model="filterForm" ref="filterForm" class="demo-form-inline" size="mini">
+      <el-form-item label="手机号码">
+        <el-input v-model="filterForm.phone" placeholder="请输入手机号码"></el-input>
+      </el-form-item>
+      <el-form-item label="公司名称">
+        <el-input v-model="filterForm.companyName" placeholder="请输入公司名称"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="success" @click="onClear">清空</el-button>
+      </el-form-item>
+    </el-form>
     <el-dialog :title="['添加','编辑'][dialogType]" :visible.sync="dialogShow" width="400px">
       <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
         <el-form-item label="手机号" prop="phone">
@@ -95,8 +107,12 @@
           pageSize: 10,
           total: 0,
         },
-        filter: {
+        filterForm: {
+          phone: '',
+          companyName: ''
         },
+        filterFormCopy: {},
+        filterFormCopyEmpty: {},
         rules: {
           phone: [
             {required: true, message: '请输入登录名', trigger: 'blur'},
@@ -172,6 +188,17 @@
           console.log('取消删除')
         });
       },
+      onSubmit() {
+        this.pageInfo.currentPage = 1
+        Object.assign(this.filterFormCopy, this.filterForm)
+        this.getRows()
+      },
+      onClear() {
+        this.pageInfo.currentPage = 1;
+        Object.assign(this.filterFormCopy, this.filterFormCopyEmpty)
+        Object.assign(this.filterForm, this.filterFormCopyEmpty)
+        this.getRows()
+      },
       del(row) {
         this.$confirm(`此操作将永久删除《${row.user.phone}》, 是否继续?`, '提示', {
           confirmButtonText: '确定',
@@ -198,7 +225,8 @@
           pageInfo: {
             pageSize: this.pageInfo.pageSize,
             currentPage: this.pageInfo.currentPage
-          }
+          },
+          filter: this.filterFormCopy
         }).then(e => {
           var promiseArr = []
           e.rows.forEach(f => {
@@ -247,6 +275,8 @@
       },
     },
     created() {
+      Object.assign(this.filterFormCopy, this.filterForm)
+      Object.assign(this.filterFormCopyEmpty, this.filterForm)
       this.getRows();
       this.getPostion();
     }

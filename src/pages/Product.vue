@@ -15,9 +15,9 @@
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="goAdd">添加商品</el-button>
     </div>
     <el-form :inline="true"  size="mini" class="demo-form-inline">
-      <!--<el-form-item label="标题">-->
-      <!--<el-input v-model="filter.title"  />-->
-      <!--</el-form-item>-->
+      <el-form-item label="标题">
+        <el-input v-model="filter.title"></el-input>
+      </el-form-item>
       <el-form-item label="状态">
         <el-select v-model="filter.status" placeholder="请选择">
           <el-option label="全部" value=""></el-option>
@@ -35,6 +35,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="success" @click="onClear">清空</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="listData.rows" border style="width: 100%" size="mini">
@@ -112,6 +113,8 @@
           isShow: "",
           title: ""
         },
+        filterCopy: {},
+        filterCopyEmpty: {},
         checkDialog: {
           show: false,
           title: '',
@@ -167,10 +170,6 @@
           this.getRows()
         })
       },
-      onSubmit() {
-        this.pageInfo.currentPage = 1;
-        this.getRows()
-      },
       getRows() {
         queryProduct({
           pageInfo: {
@@ -190,6 +189,17 @@
           status: row.status != 0 ? row.status : 1
         })
       },
+      onSubmit() {
+        this.pageInfo.currentPage = 1
+        Object.assign(this.filterCopy, this.filter)
+        this.getRows()
+      },
+      onClear() {
+        this.pageInfo.currentPage = 1;
+        Object.assign(this.filterCopy, this.filterCopyEmpty)
+        Object.assign(this.filter, this.filterCopyEmpty)
+        this.getRows()
+      },
       checkSubmit() {
         checkProduct({
           id: this.checkDialog.id,
@@ -203,6 +213,8 @@
       },
     },
     created() {
+      Object.assign(this.filterCopy, this.filter)
+      Object.assign(this.filterCopyEmpty, this.filter)
       this.getRows();
     }
   }

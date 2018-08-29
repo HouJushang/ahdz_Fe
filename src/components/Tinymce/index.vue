@@ -11,6 +11,7 @@
 import editorImage from './components/editorImage'
 import plugins from './plugins'
 import toolbar from './toolbar'
+import {baseUrl} from '../../config'
 
 export default {
   name: 'tinymce',
@@ -81,9 +82,12 @@ export default {
         code_dialog_width: 1000,
         advlist_bullet_styles: 'square',
         advlist_number_styles: 'default',
-        imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
         default_link_target: '_blank',
-        link_title: false,
+        fontsize_formats: "10px 11px 12px 13px 14px 15px 16px 17px 18px 19px 20px 21px 22px",
+        convert_urls: false,
+        // relative_urls : false,
+        remove_script_host : false,
+
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
         init_instance_callback: editor => {
           if (_this.value) {

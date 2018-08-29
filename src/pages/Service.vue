@@ -15,9 +15,9 @@
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="goAdd">添加服务信息</el-button>
     </div>
     <el-form :inline="true"  size="mini" class="demo-form-inline">
-      <!--<el-form-item label="标题">-->
-        <!--<el-input v-model="filter.title"  />-->
-      <!--</el-form-item>-->
+      <el-form-item label="标题">
+        <el-input v-model="filter.title"  />
+      </el-form-item>
       <el-form-item label="状态">
         <el-select v-model="filter.status" placeholder="请选择">
           <el-option label="全部" value=""></el-option>
@@ -35,6 +35,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="success" @click="onClear">清空</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="listData.rows" border style="width: 100%" size="mini">
@@ -72,7 +73,7 @@
           <el-button type="primary" icon="el-icon-edit"  size="mini" @click="edit(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete"  size="mini" @click="showDel(scope.row)"></el-button>
           <el-button type="warning" size="mini" icon="el-icon-setting"  @click="check(scope.row)"></el-button>
-          <el-button type="primary" size="mini" icon="el-icon-star-off"  @click="position(scope.row)"></el-button>
+          <!--<el-button type="primary" size="mini" icon="el-icon-star-off"  @click="position(scope.row)"></el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -125,6 +126,8 @@
           isShow: "",
           title: ""
         },
+        filterCopy: {},
+        filterCopyEmpty: {},
         positionData: {
           show: false,
           data: [],
@@ -192,7 +195,14 @@
         })
       },
       onSubmit() {
+        this.pageInfo.currentPage = 1
+        Object.assign(this.filterCopy, this.filter)
+        this.getRows()
+      },
+      onClear() {
         this.pageInfo.currentPage = 1;
+        Object.assign(this.filterCopy, this.filterCopyEmpty)
+        Object.assign(this.filter, this.filterCopyEmpty)
         this.getRows()
       },
       getRows() {
@@ -262,6 +272,8 @@
       },
     },
     created() {
+      Object.assign(this.filterCopy, this.filter)
+      Object.assign(this.filterCopyEmpty, this.filter)
       this.getRows();
       this.getPostion('service');
     }

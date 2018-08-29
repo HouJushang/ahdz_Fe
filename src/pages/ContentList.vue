@@ -25,7 +25,33 @@
       <p>{{category.name}}--列表</p>
       <el-button type="primary" icon="el-icon-edit" size="mini" @click="addContent" style="float: right;">发布</el-button>
     </div>
-    <el-table :data="listData.rows" border style="width: 100%" size="mini" v-if="category.label">
+    <div>
+      <el-form :inline="true" :model="filterForm" ref="filterForm" class="demo-form-inline" size="mini">
+        <el-form-item label="标题">
+          <el-input v-model="filterForm.title" placeholder="请输入标题"></el-input>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="filterForm.status" placeholder="请选择">
+            <el-option label="全部" value=""></el-option>
+            <el-option label="显示" value="1"></el-option>
+            <el-option label="隐藏" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="审核">
+          <el-select v-model="filterForm.check" placeholder="请选择">
+            <el-option label="全部" value=""></el-option>
+            <el-option label="待审核" value="0"></el-option>
+            <el-option label="通过" value="1"></el-option>
+            <el-option label="未通过" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+          <el-button type="success" @click="onClear">清空</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <el-table :loading="loading" :data="listData.rows" border style="width: 100%" size="mini" v-if="category.label">
       <el-table-column
         type="index"
         width="50">
@@ -43,7 +69,12 @@
       </el-table-column>
       <el-table-column prop="status" label="状态"  width="80">
         <template slot-scope="scope">
-          <el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['待审核', '显示', '隐藏'][scope.row.status]}}</el-tag>
+          <el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['不显示', '显示', '隐藏'][scope.row.status]}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="check" label="审核"  width="80">
+        <template slot-scope="scope">
+          <el-tag :type="['info', 'success', 'danger'][scope.row.check]">{{['待审核', '通过', '未通过'][scope.row.check]}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="order" label="排序(大到小)">
@@ -55,8 +86,10 @@
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit"  size="mini" @click="edit(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete"  size="mini" @click="del(scope.row)"></el-button>
-          <el-button type="warning" size="mini" icon="el-icon-setting"  @click="check(scope.row)"></el-button>
+          <el-button type="warning" size="mini" icon="el-icon-view"  @click="check(scope.row)"></el-button>
           <el-button type="primary" size="mini" icon="el-icon-star-off" v-if="positionData.data.length > 0"  @click="position(scope.row)"></el-button>
+          <el-button type="warning" size="mini" icon="el-icon-success" v-if="scope.row.check == 2 || scope.row.check == 0"  @click="shenhe(scope.row, 1)"></el-button>
+          <el-button type="warning" size="mini" icon="el-icon-error" v-if="scope.row.check == 1 || scope.row.check == 0" @click="shenhe(scope.row, 2)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -89,23 +122,33 @@
 
 <script>
   import {getCategoryById} from '../api/category'
-  import {queryContent, delContent, checkContent, updateContent} from "../api/content";
+  import {queryContent, delContent, checkContent, updateContent, checkContentStatus} from "../api/content";
   import {addPositionContent, queryPositionContent} from '../api/positionContent'
   import dateFormat from '../util/dateFormat'
   import {queryPosition} from '../api/position'
+  import {filter} from '../util/objectUtil'
 
   export default {
     name: 'admmin_page',
     data () {
       return {
+        rolename: localStorage.getItem('rolename'),
         dateFormat,
         category: {},
+        loading: false,
         positionData: {
           show: false,
           data: [],
           choose: [],
           row: null,
         },
+        filterForm: {
+          title: '',
+          status: '',
+          check: ''
+        },
+        filterFormCopy: {},
+        filterFormCopyEmpty: {},
         listData: {
           count: 0,
           rows: []
@@ -155,13 +198,18 @@
         this.getRows();
       },
       getRows() {
+        this.loading = true
         queryContent(this.$route.params.categoryId, {
           pageInfo: {
             pageSize: this.pageInfo.pageSize,
             currentPage: this.pageInfo.currentPage
-          }
+          },
+          filter: filter(this.filterFormCopy)
         }).then(e => {
           this.listData = e;
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
         })
       },
       edit(row) {
@@ -174,12 +222,25 @@
         })
       },
       check(row) {
-        console.log(row)
         Object.assign(this.checkDialog, {
           show: true,
           title: row.title,
           id: row.id,
           status: row.status != 0 ? row.status : 1
+        })
+      },
+      shenhe(row, check) {
+        this.$confirm(['', `确认审核通过?`, '确认审核不通过？'][check]).then(() => {
+          checkContentStatus(this.$route.params.categoryId, {
+            id: row.id,
+            check: check
+          }).then(e => {
+            this.getRows()
+          }).catch(e => {
+            this.$message.error(e);
+          })
+        }).catch(() => {
+          console.log('cancel shanhe')
         })
       },
       checkSubmit() {
@@ -210,6 +271,17 @@
         }).then(e => {
           this.positionData.data = e
         })
+      },
+      onSubmit() {
+        this.pageInfo.currentPage = 1
+        Object.assign(this.filterFormCopy, this.filterForm)
+        this.getRows()
+      },
+      onClear() {
+        this.pageInfo.currentPage = 1;
+        Object.assign(this.filterFormCopy, this.filterFormCopyEmpty)
+        Object.assign(this.filterForm, this.filterFormCopyEmpty)
+        this.getRows()
       },
       addContent(){
         this.$router.push({name: this.category.model, params: { categoryId: this.category.id }})
@@ -248,6 +320,8 @@
       },
     },
     created() {
+      Object.assign(this.filterFormCopy, this.filterForm)
+      Object.assign(this.filterFormCopyEmpty, this.filterForm)
       this.getRows();
       this.getCategory();
     }
