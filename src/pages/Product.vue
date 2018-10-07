@@ -18,7 +18,7 @@
       <el-form-item label="标题">
         <el-input v-model="filter.title"></el-input>
       </el-form-item>
-      <el-form-item label="状态">
+      <el-form-item label="审核">
         <el-select v-model="filter.status" placeholder="请选择">
           <el-option label="全部" value=""></el-option>
           <el-option label="待审核" value="0"></el-option>
@@ -43,7 +43,11 @@
         type="index"
         width="50">
       </el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
+      <el-table-column label="标题">
+        <template slot-scope="scope">
+          <a style="color: black" :href="`${homeUrl}productDetail/${scope.row.id}`" target="_blank">{{ scope.row.title }}</a>
+        </template>
+      </el-table-column>
       <el-table-column prop="company.companyName" label="公司名称"></el-table-column>
       <el-table-column prop="guige" label="规格"></el-table-column>
       <el-table-column prop="jiage" label="价格"></el-table-column>
@@ -52,7 +56,7 @@
           <el-tag :type="['danger', 'sucess'][scope.row.isShow]">{{ ['不展示', '展示'][scope.row.isShow] }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="状态"  width="80">
+      <el-table-column prop="status" label="审核"  width="80">
         <template slot-scope="scope">
           <el-tag :type="['info', 'success', 'danger'][scope.row.status]">{{['待审核', '通过', '未通过'][scope.row.status]}}</el-tag>
         </template>
@@ -66,7 +70,9 @@
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit"  size="mini" @click="edit(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete"  size="mini" @click="showDel(scope.row)"></el-button>
-          <el-button v-if="rolename == '审核员'" type="warning" size="mini" icon="el-icon-setting"  @click="check(scope.row)"></el-button>
+          <el-button type="success" size="mini" icon="el-icon-success" v-if="(scope.row.status == 2 || scope.row.status == 0) && rolename == '审核员'"  @click="shenhe(scope.row, 1)"></el-button>
+          <el-button type="warning" size="mini" icon="el-icon-error" v-if="(scope.row.status == 1 || scope.row.status == 0) && rolename == '审核员'" @click="shenhe(scope.row, 2)"></el-button>
+          <!--<el-button v-if="rolename == '审核员'" type="warning" size="mini" icon="el-icon-setting"  @click="check(scope.row)"></el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -92,6 +98,7 @@
   import {queryProduct, delProduct, checkProduct, updateProduct} from '../api/product'
   import dateFormat from '../util/dateFormat'
   import { filter } from '../util/objectUtil'
+  import {homeUrl} from "../config";
 
   export default {
     name: 'admmin_page',
@@ -99,6 +106,7 @@
       return {
         rolename: localStorage.getItem('rolename'),
         dateFormat,
+        homeUrl,
         formData: {},
         listData: {
           count: 0,
@@ -188,6 +196,20 @@
           title: row.title,
           id: row.id,
           status: row.status != 0 ? row.status : 1
+        })
+      },
+      shenhe(row, check) {
+        this.$confirm(['', `确认审核通过?`, '确认审核不通过？'][check]).then(() => {
+          checkProduct({
+            id: row.id,
+            status: check
+          }).then(e => {
+            this.getRows()
+          }).catch(e => {
+            this.$message.error(e);
+          })
+        }).catch(() => {
+          console.log('cancel shanhe')
         })
       },
       onSubmit() {

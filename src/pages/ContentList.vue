@@ -56,7 +56,11 @@
         type="index"
         width="50">
       </el-table-column>
-      <el-table-column :prop="category.main" :label="category.label"></el-table-column>
+      <el-table-column :prop="category.main" :label="category.label">
+        <template slot-scope="scope">
+          <a style="color: black" :href="`${homeUrl}content/${category.id}/${scope.row.id}`" target="_blank">{{ scope.row[category.main] }}</a>
+        </template>
+      </el-table-column>
       <el-table-column prop="createdAt" label="创建时间"  width="150">
         <template slot-scope="scope">
           <span>{{dateFormat(new Date(scope.row.createdAt))}}</span>
@@ -127,12 +131,14 @@
   import dateFormat from '../util/dateFormat'
   import {queryPosition} from '../api/position'
   import {filter} from '../util/objectUtil'
+  import {homeUrl} from "../config";
 
   export default {
     name: 'admmin_page',
     data () {
       return {
         rolename: localStorage.getItem('rolename'),
+        homeUrl,
         dateFormat,
         category: {},
         loading: false,

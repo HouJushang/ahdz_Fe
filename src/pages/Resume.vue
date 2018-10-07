@@ -43,7 +43,11 @@
         type="index"
         width="50">
       </el-table-column>
-      <el-table-column prop="name" label="名字"></el-table-column>
+      <el-table-column label="名字">
+        <template slot-scope="scope">
+          <a style="color: black" :href="`${homeUrl}resume/${scope.row.id}`" target="_blank">{{ scope.row.name }}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="展示">
         <template slot-scope="scope">
           <el-tag :type="['danger', 'sucess'][scope.row.isShow]">{{ ['停用', '展示'][scope.row.isShow] }}</el-tag>
@@ -80,12 +84,15 @@
   import {queryResume, delResume, updateResume} from '../api/resume'
   import dateFormat from '../util/dateFormat'
   import { filter } from '../util/objectUtil'
+  import {homeUrl} from "../config";
+
 
   export default {
     name: 'resume_page',
     data() {
       return {
         dateFormat,
+        homeUrl,
         formData: {},
         listData: {
           count: 0,
