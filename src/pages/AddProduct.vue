@@ -39,6 +39,15 @@
       <el-form-item label="价格" prop="jiage">
         <el-input v-model="formData.jiage" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="商品类型">
+        <el-select v-model="formData.type" placeholder="请选择" size="mini">
+          <el-option
+            v-for="item in ['普通商品', '好网货商品']"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="商品规格" prop="guige">
         <el-input v-model="formData.guige" size="mini"></el-input>
       </el-form-item>
@@ -90,7 +99,8 @@
         },
         formData: {
           isShow: 0,
-          image: ''
+          image: '',
+          type: '普通商品'
         },
         rules: {
           title: [

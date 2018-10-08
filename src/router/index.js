@@ -35,6 +35,7 @@ import PositionContent from '@/pages/PositionContent'
 import PositionList from '@/pages/PositionList'
 import RoleMenu from '@/pages/RoleMenu'
 import Accessory from '@/pages/Accessory'
+import Leave from '@/pages/Leave'
 
 Vue.use(Router)
 
@@ -273,6 +274,11 @@ export default new Router({
           path: 'accessory',
           name: 'accessory',
           component: Accessory
+        },
+        {
+          path: 'leave',
+          name: 'leave',
+          component: Leave
         },
       ]
     }

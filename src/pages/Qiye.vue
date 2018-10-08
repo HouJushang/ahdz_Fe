@@ -36,6 +36,15 @@
       <el-form-item label="摘要" prop="description">
         <el-input type="textarea" :rows="4" v-model="formData.description" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="企业类型">
+        <el-select v-model="formData.type" placeholder="请选择" size="mini">
+          <el-option
+            v-for="item in ['国家级电商示范企业', '省级电商示范企业', '电商示范企业']"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="地址" prop="address">
         <el-input v-model="formData.address" size="mini"></el-input>
       </el-form-item>
@@ -88,6 +97,7 @@
         },
         formData: {
           thumb: '',
+          type: ''
         },
         rules: {
           title: [

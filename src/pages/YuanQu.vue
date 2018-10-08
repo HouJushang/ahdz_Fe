@@ -36,6 +36,15 @@
       <el-form-item label="地址" prop="address">
         <el-input v-model="formData.address" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="园区类型">
+        <el-select v-model="formData.type" placeholder="请选择" size="mini">
+          <el-option
+            v-for="item in ['国家级电商产业园区', '省级电商产业园区', '电商产业园区']"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="面积" prop="mianji">
         <el-input v-model="formData.mianji" size="mini"></el-input>
       </el-form-item>

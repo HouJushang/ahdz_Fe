@@ -20,6 +20,9 @@ function checkContentStatus(categiryId, data) {
 function updateContent(categiryId, data){
   return putApi(`admin/content/${categiryId}`, data)
 }
+function queryLeave(data){
+  return postApi('admin/leave', data)
+}
 export {
   queryOneContent,
   queryContent,
@@ -27,5 +30,6 @@ export {
   addContent,
   updateContent,
   checkContent,
-  checkContentStatus
+  checkContentStatus,
+  queryLeave
 }

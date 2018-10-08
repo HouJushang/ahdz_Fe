@@ -41,6 +41,9 @@
       <el-form-item label="企业名称" prop="companyName">
         <el-input v-model="formData.companyName" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="标签" prop="companyName">
+        <el-input v-model="formData.tag" size="mini"></el-input>
+      </el-form-item>
       <el-form-item label="企业描述" prop="description">
         <el-input type="textarea" rows="5" v-model="formData.description" size="mini"></el-input>
       </el-form-item>
@@ -127,6 +130,7 @@
         formData: {
           logo: '',
           companyName: '',
+          tag: '',
           zzjgdm: '',
           qyzclx: '',
           xzdm: '',
