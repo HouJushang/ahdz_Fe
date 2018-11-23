@@ -45,7 +45,7 @@
       <el-form-item label="图片" prop="thumb">
         <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.thumb" :src="baseHost + formData.thumb" class="avatar">
+          <img v-if="formData.thumb" :src="formData.thumb" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -111,14 +111,14 @@
       },
       handleAvatarSuccess(res, file) {
         if (res.code == 'success') {
-          this.formData.thumb = "/" + res.data.url
+          this.formData.thumb = res.data.url
         } else {
           this.$message.error('图片上传失败！');
         }
       },
       videoSuccess(res, file){
         if (res.code == 'success') {
-          this.formData.video = "/" + res.data.url
+          this.formData.video =res.data.url
         } else {
           this.$message.error('视频上传失败！');
         }

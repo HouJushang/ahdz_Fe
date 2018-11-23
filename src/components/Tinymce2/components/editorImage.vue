@@ -56,7 +56,7 @@ export default {
       for (let i = 0, len = objKeyArr.length; i < len; i++) {
         console.log(i)
         if (this.listObj[objKeyArr[i]].uid === uid) {
-          this.listObj[objKeyArr[i]].url = baseHost + '/' + response.data.url
+          this.listObj[objKeyArr[i]].url = response.data.url
           this.listObj[objKeyArr[i]].hasSuccess = true
           return
         }

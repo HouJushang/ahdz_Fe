@@ -156,7 +156,7 @@
     methods: {
       handleAvatarSuccess(res, file) {
         if (res.code == 'success') {
-          this.formData.image = baseUrl + res.data.url
+          this.formData.image = res.data.url
         } else {
           this.$message.error('图片上传失败！');
         }

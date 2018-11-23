@@ -119,7 +119,7 @@
     methods :{
       handleSuccess(res, file) {
         if (res.code == 'success') {
-          this.formData.file = baseUrl + res.data.url
+          this.formData.file = res.data.url
         } else {
           this.$message.error('图片上传失败！');
         }

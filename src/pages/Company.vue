@@ -33,7 +33,7 @@
       <el-form-item label="logo" prop="logo">
         <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.logo" :src="baseHost + formData.logo" class="avatar">
+          <img v-if="formData.logo" :src="formData.logo" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           <div slot="tip" class="el-upload__tip">建议上传图片尺寸为340*250px</div>
         </el-upload>
@@ -185,7 +185,7 @@
       },
       handleAvatarSuccess(res, file) {
         if (res.code == 'success') {
-          this.formData.logo = "/" + res.data.url
+          this.formData.logo = res.data.url
         } else {
           this.$message.error('图片上传失败！');
         }
