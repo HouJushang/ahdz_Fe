@@ -45,16 +45,16 @@
       <el-form-item label="图片" prop="thumb">
         <el-upload class="avatar-uploader" :action="baseUrl + 'upload'" :show-file-list="false"
                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.thumb" :src="formData.thumb" class="avatar">
+          <img v-if="formData.thumb" :src="baseHost + formData.thumb" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           <div slot="tip" class="el-upload__tip">只能上传jpg/png/gif等图片文件，推荐上传297*223px比例的图片</div>
         </el-upload>
       </el-form-item>
       <el-form-item label="视频" prop="origin">
-        <el-upload class="upload-demo" :before-upload="beforeVideoUpload" :action="baseUrl + 'upload'" :on-success="handleSuccess" multiple :limit="1" :data="postData">
+        <el-upload class="upload-demo" :before-upload="beforeVideoUpload" :action="baseUrl + 'upload'" :on-success="handleSuccess" multiple :limit="1">
           <el-button size="mini" type="primary">点击上传</el-button>
         </el-upload>
-        {{ formData.video }}
+        <el-input v-model="formData.video" placeholder="视频地址" size="mini"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style="margin-top: 10px;" @click="submit" :disabled="videoLoading">提交</el-button>
@@ -81,9 +81,6 @@
           initialFrameHeight: 400
         },
         videoLoading: false,
-        postData: {
-          token: ''
-        },
         formData: {
           title: '',
           author: '',
@@ -125,14 +122,8 @@
         if (res.code == 'success') {
           this.formData.video = res.data.url
         } else {
-          this.$message.error('图片上传失败！');
+          this.$message.error('视频上传失败！');
         }
-        // if (res.key) {
-        //   this.formData.video = res.key
-        //   this.$message.success('视频上传成功！');
-        // } else {
-        //   this.$message.error('视频上传失败！');
-        // }
         this.videoLoading = false
       },
       goBack() {
