@@ -54,6 +54,11 @@
           </span>
         </template>
       </el-table-column>
+      <el-table-column prop="user.phone" label="添加时间">
+          <template slot-scope="scope">
+            <span>{{dateFormat(new Date(scope.row.createdAt))}}</span>
+          </template>
+      </el-table-column>
       <el-table-column label="操作" width="380" align="center">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditForm(scope.row.user)">基本信息</el-button>
@@ -85,11 +90,13 @@
   import {queryUser, delUser2, addUser, updateUser} from '../api/user'
   import {addPositionContent, queryPositionContent, positionDetail} from '../api/positionContent'
   import {queryPosition} from '../api/position'
+  import dateFormat from '../util/dateFormat'
   import {queryCompanyList} from '../api/company'
   export default {
     name: 'user_page',
     data () {
       return {
+        dateFormat,
         dialogShow: false,
         dialogType: 0,
         listData: {
