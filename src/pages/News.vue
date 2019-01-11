@@ -39,7 +39,7 @@
       <el-form-item label="作者" prop="author">
         <el-input v-model="formData.author" size="mini"></el-input>
       </el-form-item>
-      <el-form-item label="作者" prop="author">
+      <el-form-item label="发布时间" prop="author">
         <el-date-picker type="datetime" v-model="formData.createdAt" size="mini"></el-date-picker>
       </el-form-item>
       <el-form-item label="来源" prop="origin">
