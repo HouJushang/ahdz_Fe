@@ -57,6 +57,9 @@
       <el-form-item label="商品链接" prop="link">
         <el-input v-model="formData.link" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="年份" prop="year">
+        <el-input v-model="formData.year" size="mini" placeholder="2019"></el-input>
+      </el-form-item>
       <el-form-item label="是否展示" prop="isShow">
         <el-radio v-model="formData.isShow" :label="0">不展示</el-radio>
         <el-radio v-model="formData.isShow" :label="1">展示</el-radio>

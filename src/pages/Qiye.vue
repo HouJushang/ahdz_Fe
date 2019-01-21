@@ -33,6 +33,26 @@
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" size="mini"></el-input>
       </el-form-item>
+      <el-form-item label="城市" prop="city" size="mini">
+        <el-select v-model="formData.city">
+          <el-option value="合肥市" label="合肥市"></el-option>
+          <el-option value="亳州市" label="亳州市"></el-option>
+          <el-option value="淮北市" label="淮北市"></el-option>
+          <el-option value="宿州市" label="宿州市"></el-option>
+          <el-option value="蚌埠市" label="蚌埠市"></el-option>
+          <el-option value="阜阳市" label="阜阳市"></el-option>
+          <el-option value="淮南市" label="淮南市"></el-option>
+          <el-option value="滁州市" label="滁州市"></el-option>
+          <el-option value="六安市" label="六安市"></el-option>
+          <el-option value="芜湖市" label="芜湖市"></el-option>
+          <el-option value="马鞍山市" label="马鞍山市"></el-option>
+          <el-option value="安庆市" label="安庆市"></el-option>
+          <el-option value="宣城市" label="宣城市"></el-option>
+          <el-option value="铜陵市" label="铜陵市"></el-option>
+          <el-option value="池州市" label="池州市"></el-option>
+          <el-option value="黄山市" label="黄山市"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="摘要" prop="description">
         <el-input type="textarea" :rows="4" v-model="formData.description" size="mini"></el-input>
       </el-form-item>
